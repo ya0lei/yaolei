@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      h4 {
+        background-color: rgb(242, 137, 137);
+      }
+      #demo1 {
+        background-color: rgb(236, 212, 201);
+      }
+      #demo2 {
+        background-color: rgb(229, 207, 171);
+      }
+      #demo3 {
+        background-color: rgb(201, 242, 179);
+      }
+      #demo4 {
+        background-color: rgb(179, 242, 241);
+      }
+      #demo5 {
+        background-color: rgb(197, 179, 242);
+      }
+    </style>
+  </head>
+  <body>
+    <h4>demo1 本地请求</h4>
+    <div id="demo1"></div>
+    <h4>demo2 GET请求</h4>
+    <div id="demo2"></div>
+    <h4>demo3 POST请求</h4>
+    <div id="demo3"></div>
+    <script>
+      // AJAX
+      // async的js and XMLHttpRequest,用来向服务器请求数据
+      // 首先在浏览器创建XML,发送XML,服务器接收,返回数据,浏览器接收数据并使用js处理,最后更新内容(AJAX可以异步更新网页,所以可以只更新网页的一部分)
+
+      // 最简单的AJAX
+      // 现阶段仅供参考
+      // 声明一个函数,能在网页显示服务端传来的内容
+      function show(demo, data) {
+        demo.innerHTML = data;
+      }
+
+      (function 请求本地数据() {
+        // 首先创建一个xml对象
+        let xml = new XMLHttpRequest();
+
+        // 然后open,请求方式
+        // 参数1:GET或者POST
+        // 参数2:文件的url地址,实验证明,如果要ajax访问一个本地文件,url参数是文件的相对位置,也就是说从本文件为起点,找到被访问文件的过程;它竟然可以是一个目录!!!!
+        // 参数3:请求是异步发送吗?true代表是,异步的话,就不用等服务器返数据才加载页面了
+        // 参数4:用户名,不知道干嘛的
+        // 参数5:密码,不知道干嘛的
+        xml.open("GET", "./XML本地文件.html", true);
+
+        // 然后onload,加载,并根据状态码判断是否请求成功,这玩意好像只能加载本地的,可以局部更新
+        xml.onload = function () {
+          // stats:请求的状态码,200成功,403禁止访问,404找不到
+          // statusText:状态码对应的文本提示,例如200对应"OK"
+
+          if (xml.status === 200) {
+            console.log("卧槽卧槽,请求成功了");
+            // 打印xml对象,看他上面有啥
+            // console.log(xml);
+            // responseText:以字符串返回数据
+            // responseXML:以XML数据返回数据
+            show(demo1, xml.responseText);
+          } else {
+            console.error("请求出错啦");
+          }
+        };
+
+        // 发送
+        // send()用作GRT服务器搞点数据给我
+        // send(string)用作POST,我搞点数据给服务器
+        xml.send();
+        // 这玩意可以取消当前的请求
+        // xml.abort();
+      })();
+
+      (function 最简单的GET请求() {
+        let xml = new XMLHttpRequest(); // 创建xml;必须项1
+        xml.open("GET", "http://localhost", true); // 配置请求;必须项2
+        xml.send(); // 发送请求;必须项3
+        // console.log(xml);
+      })();
+      //  readyState,表示XML的状态值
+      // 0:还没建立连接
+      // 1:浏览器和服务器建立连接
+      // 2.服务器收到请求
+      // 3.服务器处理请求
+      // 4:请求成功准备响应数据
+
+      // 通过readyState的状态值变化,我们可以知道数据是否请求成功
+      // 这样,我们向服务器请求数据,可以用xml.onReadyStateChange=()=>{},而不是onload=()=>{},这样更加合理
+      (function GET请求() {
+        let xml = new XMLHttpRequest();
+
+        xml.onreadystatechange = () => {
+          if (xml.readyState === 4 && xml.status === 200) {
+            console.log("GET请求成功");
+            show(demo2, xml.responseText);
+          } else {
+            console.log("GET请求出错啦");
+          }
+        };
+        // url还可以拼接查询字符串
+        xml.open("GET", "http://127.0.0.1?naem=张三&age=30", true);
+        xml.send();
+      })();
+      // POST请求
+      (function POST请求() {
+        let xml = new XMLHttpRequest();
+        // 监听xml的状态值0,1,2,3,4,变成4请求成功拿到数据xml
+        xml.onreadystatechange = function () {
+          if (xml.readyState === 4 && xml.status === 200) {
+            // 服务器一般会返回一个提交成功的消息
+            show(demo3, xml.responseText);
+            console.log("POST请求成功啦");
+          } else {
+            console.log("POST请求出错啦");
+          }
+        };
+        xml.open("POST", "http://127.0.0.1");
+        // 设置请求头(这玩意是固定写法,且必须放在open下面,只有post需要发送请求体才要写这个)
+        xml.setRequestHeader(
+          "Content-Type",
+          "application/x-www-form-urlencoded"
+        );
+        // 可以发送请求体
+        xml.send("haha=我是post&hahaha=老子劲来了");
+      })();
+    </script>
+  </body>
+</html>

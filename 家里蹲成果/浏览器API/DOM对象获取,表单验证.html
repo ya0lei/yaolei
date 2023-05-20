@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 创建dom元素 -->
+    <p>我是标签p</p>
+    <p class="pp">我是标签p&&类名pp</p>
+    <p id="ppp">我是标签p&&id#PPP</p>
+    <div class="dd">我是标签div&&类名dd</div>
+    <div class="dd">我是标签div&&类名dd</div>
+    <div class="dd">我是标签div&&类名dd</div>
+    <hr />
+    <form>
+      <!-- required必填,不能判断空格 -->
+      姓名:<input type="text" required /><br />
+      年龄:<input type="text" required /><br />
+      <button>提交</button><br />
+      <button onclick="this.style.visibility ='hidden'">
+        真提交,不是和你闹着玩的
+      </button>
+    </form>
+
+    <script>
+      // DOM:文档对象模型
+      // 网页一加载,浏览器会创建DOM树,里面有着无数的节点,我们通过js操作DOM树的节点,达到动态HTML的效果
+      // 最大的DOM是文档,然后是HTML....以此类推
+
+
+      // 获取dom元素
+      // querySelector根据选择器来找人,是最牛逼的,其他方法可以忘掉了
+      // querySelector大部分情况获取的是NodeList文档节点
+      // ClassName获取HTMLCollection元素集合(就是标签,应该)
+      // 他们几乎是一样的,都是伪数组,有索引,length,但是文档节点只能通过索引获取某一项
+
+      // 标签 获取所有满足条件的,想要第一个满足条件的末尾补零[0]
+      let pTag = document.getElementsByTagName("p");
+      let p1 = document.querySelectorAll("p");
+      // 类名 同上
+      let pClass = document.getElementsByClassName("pp");
+      let p2 = document.querySelectorAll(".pp");
+
+      console.log(pClass);
+      console.log(p2);
+
+      // id 只会获取单个,重复的id只有第一个生效,可以直接使用id而不用专门获取
+      let pId = document.getElementById("ppp");
+      let p3 = document.querySelector("#ppp");
+      // html对象选择器,这个没听过,而且什么鬼,不会用
+      // 好像只能用作表单,会得到当前页面所有表单
+      // document.forms[0] 第一个
+      // document.forms["name"] 表单满足name的
+      let forms = document.forms;
+      console.log(forms[0]);
+      console.log(p1, p2, p3);
+      // 改变HTML的 内容
+      // 可以传字符串,按innerHTML解读
+      // 这个数据是会刷新的,不要在文档加载后使用,会覆盖文档
+      // document.write(new Date())
+      // innerHTML
+      p1[0].innerHTML = "<p>哈哈哈</p><p>哈哈哈</p>";
+      p2[0].innerText = "<p>哈哈哈</p><p>哈哈哈</p>";
+
+      // 改变HTML的属性,之style
+      p1[0].style.backgroundColor = "cyan";
+
+      (function 表单验证() {
+        // 正则才是真神,下面这个小打小闹
+        let forms = document.forms[0];
+        // [0]姓名,[1]年龄,[2]提交按钮
+        console.log(forms);
+        // forms只看的到表单,其他东西,比如<p>不在他的名下
+        // 给按钮绑定点击事件
+        forms[2].onclick = function (e) {
+          // 禁止按钮的默认提交行为
+          e.preventDefault();
+          //   如果姓名为空,报错
+          if (forms[0].value.trim() === "") {
+            forms[0].value = "";
+            forms[0].placeholder = "格式错误";
+            // 或者年龄为空,报错
+          } else if (forms[1].value.trim() === "") {
+            forms[1].value = "";
+            forms[1].placeholder = "格式错误";
+            // 否则成功
+          } else {
+            forms[2].innerText = "提交成功";
+            setTimeout(function () {
+              forms[2].innerText = "再次提交";
+            }, 1000);
+          }
+        };
+      })();
+    </script>
+  </body>
+</html>

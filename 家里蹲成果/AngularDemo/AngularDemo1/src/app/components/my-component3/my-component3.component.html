@@ -1,0 +1,68 @@
+<h2>Angular学习3</h2>
+<h3>生命周期</h3>
+<h3>组件通信</h3>
+<!-- 父传子 -->
+<!-- 1.子组件标签自定义属性 -->
+<!-- 2.子组件文件import Input模块 -->
+<!-- 3.子组件文件中class @Input接收 -->
+<p>父传子----------------------------------------</p>
+<app-son [title]="title"></app-son>
+
+<!-- 子传父 -->
+<!-- 1.子组件文件import Output,EventEmitter模块 -->
+<!-- 2.子组件文件声明自定义事件 @Output-->
+<!-- 3.子组件文件定义事件来触发自定义事件 -->
+<!-- 4.子组件标签绑定自定义事件,并且通过自定义事件来触发父组件中的事件 -->
+<p>子传父----------------------------------------</p>
+<app-son (sonFn)="addItem($event)"></app-son>
+<ul>
+  <li>子组件传1个值,数组push 1个,多渲染1个</li>
+  <li *ngFor="let item of items">{{ item }}</li>
+</ul>
+
+<p>内容投影,就是vue的插槽---------------------</p>
+<app-son2>
+  <div>内容投影cool吗?</div>
+  <div bbb>投到bbb的插槽里面</div>
+</app-son2>
+
+<p>服务----------------------------------------</p>
+<!-- 服务的使用 
+ 1.cli创建文件
+ 2.手动在app.model.ts文件中引入MyServeService
+ 3.手动在app.model.ts文件中的providers中引入MyServeService
+ 4.在需要服务的组件中import引入注册 
+ 5.在class中this.MyServeService获取数据和方法使用
+-->
+<!-- 写一个简单的操作服务中数据的demo -->
+<ul>
+  <li>服务的list数据</li>
+  <li *ngFor="let list of lists">{{ list }}</li>
+</ul>
+<button (click)="addList()">服务list新增一项</button>
+<hr />
+<!-- 路由传参 -->
+<!-- query传参,会编译成 路径/son?name=12&age=3 -->
+<a
+  [routerLink]="['/mypath3/son']"
+  [queryParams]="{ name: '你好', age: 123 }"
+  routerLinkActive="son1Active"
+  >点击子路由显示子组件1</a
+><br />
+
+<!-- params传参,会编译成 路径/son/ -->
+<a [routerLink]="['/mypath3/son2','给我出来!!','可以多个']"  routerLinkActive="son2Active"
+  >点击子路由显示子组件2</a
+><br />
+<router-outlet></router-outlet>
+<!-- query获取路由的传参
+1.在切换路由的a里面添加[queryParams]={}
+2.在文件中import ActivatedRoute
+3.在文件中class中添加constructor(private routerInfo: ActivatedRoute){} 
+4.在文件中this.routerInfo使用,这里的routerInfo是自定义的-->
+
+<!-- params获取路由的传参 
+1.在切换路由的a里面添加[routerLink]="['/mypath3/son2','我是params传递的数据']" 
+2.路由文件,path路径添加后缀 /:name
+3.同上的2,3,4
+-->

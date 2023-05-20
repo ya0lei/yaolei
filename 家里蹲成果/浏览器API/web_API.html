@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      h3 {
+        background-color: rgb(108, 191, 192);
+      }
+      #d1 {
+        background-color: rgb(198, 164, 164);
+      }
+      #d2 {
+        background-color: rgb(179, 181, 150);
+      }
+      #d3 {
+        background-color: rgb(171, 198, 164);
+      }
+      #d4 {
+        background-color: rgb(164, 167, 198);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="d1">
+      <h3>demo1</h3>
+      输入数字:<input type="number" id="ipt" min="5" max="100" required />
+      <button id="btn">数字是否是5-100</button><br />
+      <p id="p">显示checkValidity结果</p>
+    </div>
+    <div id="d2">
+      <h3>demo2</h3>
+      <button id="btn2">点击后退一页</button>
+      <button id="btn2_1">点击我后退两页</button>
+      <button id="btn2_2">点击我前进一页</button>
+    </div>
+    <div id="d3">
+      <h3>demo3</h3>
+      <p>自增的数字: <output id="result"></output></p>
+      <button id="btn3_1">Worker脚本开始运行</button>
+      <button id="btn3_2">Worker脚本停止运行</button>
+    </div>
+    <div id="d4">
+      <h3>demo4</h3>
+      <p id="fetch">显示请求的数据</p>
+    </div>
+    <script>
+      // web API,web的应用程序接口
+      // 浏览器api可以扩展web浏览器的功能,服务器api可以扩展web服务器的功能
+      //   api:就是别人封装好的函数,直接拿来调用就行了,最简单的api(console,alert)
+
+      //   感觉不好用,不如自己写判断,更加灵活
+      (function 表单验证() {
+        // checkValidity 如果input的value符合要求,返回true
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          if (ipt.checkValidity()) {
+            p.innerText = "正确";
+          } else {
+            p.innerText = "错误";
+          }
+          setTimeout(() => {
+            ipt.value = "";
+            p.innerText = "再来一次吧";
+          }, 1000);
+        });
+      })();
+      (function 浏览器历史记录() {
+        btn2.addEventListener("click", () => {
+          // 历史后退,相当于点击←,不刷新离开页
+          window.history.back();
+        });
+        btn2_1.addEventListener("click", () => {
+          // history.go
+          // 后退两页,并刷新离开页
+          window.history.go(-2);
+        });
+        // 原生写一个,别忘了
+        btn2_2.onclick = function () {
+          // 前进一页
+          window.history.forward();
+        };
+        // history基本属性,里面有length,表示历史记录存在多少个url,其他的自己看去
+        console.log(history);
+      })();
+      (function 浏览器存储() {
+        // 它两一个存本地数据,一个存会话数据,都只能存5m
+        // localStorage,哈哈,老熟人了
+        // 存一些本地数据,它没有过期时间
+        // 增/改
+        localStorage.setItem("userName", "姚磊");
+        //   查
+        let userName = localStorage.getItem("userName");
+        console.log(userName);
+        //   删
+        localStorage.removeItem("userName");
+        // 清空
+        // localStorage.clear()
+
+        //   sessionStorage
+        //  存一些会话数据,浏览器关闭,就没了
+        // 增/改
+        sessionStorage.setItem("time", "2022-09-23");
+        // 查
+        let time = sessionStorage.getItem("time");
+        console.log(time);
+      })();
+
+      // web worker
+      // 页面需要加载完html和js文件,才能呈现出来
+      // 但是,web worker是在后台运行的js,不影响其他的进程
+      (function worker是后台的js() {
+        // 首先,判断worker是否可用
+        console.dir(Worker);
+        // 真正开发肯定不能这样,下面来个完美写法
+        if (typeof Worker !== "undefined") {
+          console.log("可以用worker");
+        }
+      })();
+
+      (function worker的用法复制() {
+        let w;
+
+        btn3_1.onclick = () => {
+          // 判断worker在浏览器是否可用
+          if (typeof w == "undefined") {
+            // 创建,并运行js脚本
+            w = new Worker("demo_worker.js");
+          }
+          //   接收信息事件
+          w.onmessage = function (e) {
+            // js脚本发送的数据在data中
+            result.innerHTML = e.data;
+          };
+        };
+        // 停止worker
+        btn3_2.onclick = () => {
+          // 停止worker
+          w.terminate();
+          //   将worker对象设undefined
+          w = undefined;
+        };
+      })();
+      //   以下都是fetch的小打小闹,有机会把ajax,axios,XMLHttpRequest,fetch一起讲一下,敬请期待
+      //  Fetch允许浏览器直接向服务器发送请求
+      //  fetch是基于async,await的,他也是个promise,所以可以用await去得到返回值
+      // 不再需要XMLHttpRequest
+      (function Fetch请求() {
+        // 把文件名薅过来
+        let file = "Fetch的数据库.js";
+        (function 一般写法() {
+          // 请求成功了,但是
+          // 数据库格式不对,拿不到数据....😅
+          fetch(file).then((f) => {
+            // f返回请求体
+            console.log(f);
+          });
+        })();
+        (async function 装逼写法() {
+          // fetch是一个promise,可以用await拿到这个promise输出的数据
+          let data = await fetch(file);
+          console.log(data);
+        })();
+        // 这两个例子都只处理了一次,拿到的是请求体,一般会data.xxx再then或者await一次,拿到真正需要的数据,而且fetch真正的写法和axios很像,不是这么简单的,所以,这个看看就行了
+      }); //()别忘了加
+
+      (function 获取用户的地理位置() {
+        // 先查看浏览器是否支持
+        if (navigator.geolocation) {
+          console.log("支持访问地理位置");
+          // 虽然支持,但是根本没东西
+          console.log(navigator.geolocation);
+          // 这个方法可以得到用户的位置的经纬度,海拔,移动速度
+          navigator.geolocation.getCurrentPosition((position) => {
+            console.log(position.coords);
+            //   position.coords.latitude返回纬度
+            //   position.coords.longitude返回经度
+          });
+        }
+      })();
+      const x = document.getElementById("demo");
+    </script>
+  </body>
+</html>

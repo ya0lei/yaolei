@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      console.warn("//我来分隔下");
+      //   判断数组的方法
+      function 是数组吗() {
+        let arr = [1, 2];
+        let str = "字符串";
+        let obj = {};
+        console.log(Array.isArray(arr));
+        console.log(Array.isArray(str));
+        // instanceof只能判断数据是否是引用数据类型(object)
+        console.log(arr instanceof Array);
+        console.log(arr instanceof Object);
+        console.log(str instanceof Array);
+        // typeof只能判断数据是那种基本数据类型,引用数据类型返回object
+        console.log(typeof str);
+        console.log(arr.constructor.toString().indexOf("Array") != -1);
+        console.log(Object.prototype.toString.call(arr).indexOf("Array") != -1);
+      }
+      是数组吗();
+
+      // slice与splice
+      // slice会返回一个新数组,原数组保持不变
+      function slice截取数组() {
+        let arr = [0, 1, 2, 3, 4];
+        // 截取数组
+        // slice(1) 从下标1开始向后截取
+        // slice(1,1) 从下标1开始向后截取1-1个
+        // slice(-1) 从后向前数第1个开始截取
+        console.log(arr.slice(0, 2));
+        console.log("slice后的原数组", arr);
+      }
+      slice截取数组();
+      // 在原数组上裁剪一块区域,原数组也发生改变
+      function splice数组方法() {
+        let arr = [0, 1, 2, 3, 4, 5, 6];
+        // 删:splice(2) 从下标2开始向后截取,返回一个新数组,存放被截取掉的元素
+        // console.log(arr.splice(2));
+        // 删:splice(-1) 从数组末位截取1个
+        // console.log(arr.splice(-2));
+        // 删:splice(0,2) 从下标0开始向后截取2个,返回一个新数组,存放被截取掉的元素
+        // console.log(arr.splice(0,2));
+        // 添加
+        // 从下标1开始,截取0个,添加xxx个,返回一个新数组,存放被截取掉的元素
+        // console.log(arr.splice(1,0,'添加1','添加2'));
+        // 添加
+        // 从数组倒数序号为1的位置开始添加,截取0个,添加xxx个,返回一个新数组,存放被截取掉的元素
+        console.log(arr.splice(-1, 0, "添加1", "添加2"));
+        console.log("splice后的原数组", arr);
+      }
+      splice数组方法();
+      function 数组方法() {
+        // 末位删除pop,返回被删的元素
+        let arr = [0, 1, 2, 3, 4, 5, 6];
+        // arr.pop()
+        console.log("被删的呜呜呜" + arr.pop());
+        // 末位添加push,返回数组的长度
+        console.log("添加哈哈后的长度" + arr.push("哈哈"));
+        // 首位删除shift,返回原位置的元素
+        console.log("首位0被删了" + arr.shift());
+        // 首位添加unshift(),返回数组的长度
+        console.log("添加000后的长度" + arr.unshift("000"));
+        //可以通过arr[下标]找到数组的元素,并且可以修改,返回修改后的元素
+        console.log((arr[0] = 0));
+        // 可以通过arr[arr.length]实现末位添加
+        console.log((arr[arr.length] = "最后一个"));
+        // delete将数组中某个元素变为undefined,不好用,没用的东西
+        console.log(delete arr[0]);
+        console.log(arr);
+      }
+      数组方法();
+      function 求多个数组的最大值合并为新数组(arr) {
+        // 声明一个新数组
+        let newArr = [];
+        // 循环拿到每一个数组,
+        // ...解构为数字,空格分隔的格式
+        arr.forEach((item) => {
+          // 求每一组数字的最大值并push给新数组
+          // console.log(...item);
+          newArr.push(Math.max(...item));
+        });
+        return newArr;
+      }
+      console.log(
+        求多个数组的最大值合并为新数组([
+          [1, 23, 2],
+          [11, 22, 33],
+          [1000, 1, 2],
+        ])
+      );
+    </script>
+  </body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 条件语句
+      let time = new Date().getHours();
+      let time2 = new Date().getDay();
+      console.log(time2);
+      if (12 > time > 5) {
+        console.log("早上好");
+      } else if (18 > time > 12) {
+        console.log("下午好");
+      } else {
+        console.log("晚上好");
+      }
+      //   switch语句
+      let day = "";
+      switch (time2) {
+        case 0:
+          day = "今天是礼拜7";
+          //   break跳出本次循环
+          break;
+        case 1:
+          day = "今天礼拜一";
+          break;
+        case 2:
+          day = "今天礼拜二";
+          break;
+        case 3:
+          day = "今天礼拜三";
+          break;
+        case 4:
+          day = "今天礼拜四";
+          break;
+        case 5:
+          day = "今天礼拜五";
+          break;
+        case 6:
+          day = "今天礼拜六";
+          break;
+
+        default:
+          day = "期待周末";
+      }
+      console.log(day);
+
+      //   循环
+      //   妹想到吧,for循环的参数可以省略成这样
+      let i = 0;
+      let num = 100;
+      for (;;) {
+        num += 1;
+        i++;
+        if (i >= 3) {
+          break;
+        }
+      }
+      console.log(num);
+
+      let arr = [0, 11, 22, 33];
+      let obj = { 1: "我是1", 2: "我是2", 3: "我是3" };
+      let str = "我是一串字符串";
+      //   for in 可循环数组,对象,字符串,建议用来循环对象
+      // 两项参数,属性/索引,对象
+      (function ForIn循环() {
+        // 循环数组
+        for (k in arr) {
+          console.log(k, arr[k]);
+        }
+        // 循环对象
+        for (k in obj) {
+          console.log(k, obj[k]);
+        }
+        // 循环字符串
+        for (k in str) {
+          console.log(k, str[k]);
+        }
+      })();
+      (function ForOf循环() {
+        // for of 可循环数组,字符串
+        // 两个参数,每一项value,对象本身
+        // 循环数组
+        for (v of arr) {
+          console.log(v, arr);
+        }
+        // 循环字符串
+        for (v of str) {
+          console.log(v, str);
+        }
+      })();
+      //   最简单的循环,while
+      let i2 = 1;
+      while (i2 < 5) {
+        console.log(i2++);
+      }
+      // 最简单循环的变体 do while
+      i = 0;
+      do {
+        console.log("我不管,我就是要跑给你看,我命由我不由天" + i2);
+        i++;
+      } while (i < 2);
+      // break打断,跳出循环
+      // continue跳过循环
+      // 正常情况break能用于跳出循环
+      // 不正常:用于跳出代码块,格式:break labelName
+      //   continue一直很正常
+      // 这里用while玩这个例子简直绝望,知道为什么大家都喜欢for了吧
+      for (i = 0; ; i++) {
+        if (i == 3) {
+          // 跳过
+          continue;
+        }
+        if (i == 6) {
+          // 跳出
+          break;
+        }
+        console.log(i);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+p {
+    background-color: rgb(78, 174, 230);
+}
+
+.red {
+    color: red;
+}
+
+.big {
+    height: 100px;
+}
+// 表单验证失败的样式
+.ipt.ng-invalid{
+    border: 1px solid red;
+}
+// 表单验证成功的样式
+.ipt.ng-valid{
+    border: 1px solid green;
+}

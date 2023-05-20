@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 在js中,对象为王,万物皆可对象,因为所有的数据类型都可以在原型上获取方法
+      // 引用数据就算值与类型都相等,也不是==的
+      console.log([1, 2, 3] == [1, 2, 3]);
+      // 共同使用同一个地址的两个引用数据是全等的
+      function 引用数据全等() {
+        let obj1 = {
+          a: "hello",
+        };
+        let obj2 = obj1;
+        obj2.a = "word";
+        console.log(obj1 === obj2);
+        console.log(obj1);
+      }
+      引用数据全等();
+      // 函数与变量有变量提升,声明会到当前作用域最上方
+      function 声明提升() {
+        console.log(a);
+        var a = 1;
+      }
+      声明提升();
+      // let也有变量提升,不过做了处理,当let在当前作用域有提升时,var的提升会被覆盖失效
+      function 提升被覆盖() {
+        console.log(a);
+        let a = 1;
+      }
+      // 提升被覆盖()
+      var a = 2;
+      // 对象的属性key是字符串
+      function 对象属性() {
+        let obj = {
+          哈哈: "我是哈哈",
+        };
+        console.log(typeof obj.哈哈);
+      }
+
+      对象属性();
+      // 看看给对象的属性点对象,js是怎么解析的
+      function 对象的key() {
+        let obj1 = {
+          a: "我是啊",
+        };
+        let obj2 = {
+          key: 123,
+        };
+        let obj3 = {
+          key: "456",
+        };
+        obj1[obj2] = 123;
+        obj1[obj3] = 456;
+        for (let k in obj1) {
+          console.log(k + ":" + obj1[k]);
+        }
+        for (let k in obj2) {
+          console.log(k + ":" + obj2[k]);
+        }
+        // 通过此例发现一个问题:
+        // 对象.kye,会去对象当前结构里找key,找不到就undefined
+        // 对象[key],这个key是一个变量,会编译下再找,所以我们最好使用对象[key]的形式,否则后续添加的key容易找不到
+      }
+      对象的key();
+      (function 对象的方法() {
+        console.warn("我来分隔下哈哈");
+        let obj = {
+          a: "我是a",
+          b: "我是b",
+          c: "我是c",
+          d: function () {
+            return "d";
+          },
+        };
+        // 获取对象所有的值,返回数组
+        console.log(Object.values(obj));
+        // 获取对象所有的键,返回数组
+        console.log(Object.keys(obj));
+        // 获取对象的键值对,变成一个数组,最后,所有键值对的数组返回一个大数组,就是返回一个二级数组,有什么用呢,我告诉你,map对象的创建需要二级数组
+        console.log(Object.entries(obj));
+        // 将对象变字符串,
+        // 字符串遵循json的格式,属性值加引号,有方法(函数)的话,无视掉,属性值都没得
+        console.log(JSON.stringify(obj));
+        // 解决函数被无视的问题
+        // 先把函数转字符串,再去stringify
+        obj.d = obj.d.toString();
+        console.log(obj.d);
+        console.log(JSON.stringify(obj));
+
+        // 对象的get set关键字
+        // 为啥用这个关键字,而不直接使用函数呢,因为这么写调用对象的方法时不用加(),和获取对象的属性语法一致
+        // get 获取
+        // set 设置
+
+        // 对象已经写好了,想添加咋办,这个方法添加普通的属性也有效
+        // 使用defineProperty
+        // Object.defineProperty(obj, "property", {
+        //   set/get: function (a) {
+        //     return a;
+        //   },
+        // });
+
+        // 获取一个对象的原型
+        // 对照发现,在不进行人为的干扰下,一个对象的原型和对象原型一毛一样
+        console.log(Object.getPrototypeOf(obj));
+        console.log(Object.prototype);
+        // 在原型上添加方法,大家都可以用了
+        Object.prototype.yaolei = "姚磊";
+        console.log(yaolei);
+      })();
+
+      (function 对象的夺命套娃方法() {
+        // 给对象添加,修改属性
+        // 禁止给对象添加,修改属性
+        // 查看对象是否被设置了禁止添加,修改属性
+      })();
+
+      (function 创建Map对象() {
+        console.warn("创建map");
+        // 总结:map是数组和对象生的儿子
+        // map对象最牛逼的就是:键可以是一个对象or数组
+        // map对象有索引,厉害了
+        // map对象还有个size,表示数据个数,等同于数组的length
+        let obj = { a: "我是啊", b: "我是吧", c: "我是从" };
+        // 创建map对象
+        // let m=new Map();//这是空的
+        let m = new Map([
+          ["a", "我是初始化的a"],
+          ["b", "我是初始化的b"],
+        ]); //这是肚子里有货的
+        // 添加修改键,记住键==属性
+        m.set(1, "我是啊啊");
+        m.set("b", "我是笨笨");
+        m.set("b", "我是不不不");
+        m.set("c", "我是踩踩");
+        // 只写键,值为undefined
+        m.set("e");
+        // 对象做键
+        m.set(obj, "我可是个对象,何时受此大辱");
+        // 数组做键
+        m.set([1, 2, 3], "我是数组,对象是我对象");
+        console.log(m);
+      })();
+      (function 操作map对象() {
+        console.warn("操作map");
+        // 先创建这个小杂种
+        let aa = { a: "aaa", b: "bbb" };
+        let m = new Map([
+          [aa, "初始化对象aa"],
+          ["a", "初始化a"],
+          ["b", "初始化b"],
+          ["c", "初始化c"],
+        ]);
+        // 注意,map对象无法使用map.a,map[a]的方式获取键的值
+        console.log(m.get("a")); // 获取键的值
+        // console.log(m.clear());// 删除所有键,返回undefined
+        console.log(m.delete("cc")); //删除指定的键,删除成功返回true
+        console.log(m.has("a")); //查找某个键,找到返回true
+        console.log(m.size); // 返回map对象元素的个数
+        console.error(m.entries()); //获取map所有的键值对,返回数组,哦,这鬼玩意原来是数组,每一个数组元素是一个对象,对象里是一组键值对,卧槽,我说呢
+        console.log(m.keys()); //所有键,返回数组
+        console.log(m.values()); //所有值,返回数组
+        // 遍历
+        m.forEach((item, index, obj) => {
+          console.log(item, index);
+        });
+        console.info(m);
+      })();
+      (function 创建set() {
+        // 总结:set是数组和对象的女儿,她是强化版的数组,使用花括号包裹元素的数组
+        let a = "啊";
+        let b = "吧";
+        let c = "从";
+        let d = { c: "从" };
+        let e = { c: "从" };
+        let f = 1;
+        let g = "1";
+        // set是唯一值的集合,也就是说每个值只能存在一次,值可以是任意的数据类型
+        // 实验发现,唯一值的判定是判断数据是否全等
+        // let s = new Set();//创建空set
+        let s = new Set(["字符的a", a, b, c]); //创建有货的set
+        s.add(c); // 添加元素
+        s.add(d);
+        s.add(e);
+        s.add(e);
+        s.add(f);
+        s.add(g);
+        console.log(s);
+      })();
+      (function 操作set对象() {
+        // 先创一个set
+        // 我滴妈,这搞得也是够复杂的
+        // 实验证明:数组,对象,set,get就算是空的,也不相等
+        let s = new Set([
+          "a",
+          "b",
+          "c",
+          "1",
+          1,
+          {},
+          {},
+          [],
+          [],
+          null,
+          undefined,
+          new Set([1, 2]),
+          new Set([1, 2]),
+          +new Date(),
+          new Map(),
+          new Map(),
+        ]);
+
+        console.log(s.add([111, 222])); //添加元素
+        // console.log(s.clear()); 清空所有元素
+        console.log(s.delete("a")); // 删除某个元素
+        console.log(s.entries()); //获取set所有元素,返回数组,不知道获取的是什么鬼玩意
+        console.log(s.has("c")); //查找某个元素,找到返回true
+        console.log(s.size); //返回元素个数
+        // 循环
+        s.forEach((item, index, obj) => {
+          console.log(item, index);
+        });
+        // 返回set所有元素,keys和values效果一样,因为set是个妖孽,属性和值是同一个,看来披着数组的外衣,意外的是个对象
+        console.log(s.keys());
+        console.log(s.values());
+
+        console.log(s);
+      })();
+
+      (function map与set的实际应用() {
+        // 尝试字面量创建set,报错了
+        let s = new Set(["壹", "贰", "叁"]);
+        let m = new Map([["a", "我是啊"],["b"]]);
+
+        // set可以而类型转换,解构加[]
+        let arr = [...s]; //这可真绝
+        // set可以去重,求并集(小学的知识还记得吧)
+        let arr1 = [1, 2, 3];
+        let arr2 = [2, 3, 4];
+        let 去重 = new Set([...arr1, ...arr2]);
+        console.log(去重);
+        // 可以求交集(你我都有的),差集(我有的你没有)
+        console.log(arr);
+
+        // map可以使用for of遍历
+        // 这玩意好奇葩
+        for (let [key, value] of m) {
+          console.log("key:" + key + "  value:" + value);
+        }
+        // map可以转数组
+        console.log(Array.from(m));
+        // map创建时传入map对象,会生成新的map对象,深拷贝啊这不是
+      })();
+    </script>
+  </body>
+</html>

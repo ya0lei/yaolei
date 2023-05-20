@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // BOM,浏览器对象模型,它允许js和浏览器对话
+      // BOM的顶级对象window,所有的全局属性和方法都挂载在window上,DOM的document对象也是window的属性
+      // window指的是当前的浏览器窗口
+      // 所有没有前缀的默认前缀是window,所有前缀是window的都可以省略前缀
+
+      // 浏览器窗口内尺寸,单位像素
+      // 因为没有绑定事件,所以这玩意是静态的,可以手动刷新,但不会随着窗口的改变刷新数据,
+      console.log(window.innerWidth, window.innerHeight);
+
+      // 浏览器窗口视口尺寸(用户端),不包括工具栏,滚动条
+      console.log(document.body.clientWidth, document.body.clientHeight);
+
+      // window窗口操作
+      // window.open() //打开新窗口,被拦截了😂
+      // window.close() // 关闭当前窗口,把自己关了,而且一打开,这行代码一走,又关了😅
+      // window.moveTo() // 移动当前窗口,移了个寂寞
+      // window.resizeTo() // 重新调整当前窗口,调了个寂寞
+
+      // window屏幕信息
+      console.log(screen.width, screen.height); // 用户的屏幕尺寸
+      console.log(screen.availWidth); //用户屏幕尺寸,去掉窗口工具条之类的屏幕可用大小
+
+      console.log(screen.colorDepth); // 屏幕色深,直译:颜色深度,含义:色彩分辨率,返回颜色的比特数,一般为24,32,比较垃圾的14
+      console.log(screen.pixelDepth); //像素深度,现代计算机pixelDepth与色深相等
+
+      // window网络地址,才发现网址的简写是网络地址
+      // 里面有各种信息,href:当前页面的url,hostname:主机域名,pathname:当前页面的路径or文件名,protocol:web协议,http或https:,assign:加载新文档
+      console.log(window.location);
+
+      // window历史记录
+      // 可以查看浏览器的历史,因为涉及用户的隐私,js访问时受到限制
+      // 解决方案:模拟浏览器,←后退 前进→
+      // window.history().back() //=点←后退
+      // window.history().forward() //=点→前进
+
+      // window的访问者信息
+      // 里面好多好多东西,比如:cookie是否使用,地理位置....
+      console.log(window.navigator);
+      console.log(window.navigator.cookieEnabled); //    window的cookieEnabled,布尔值表示cookie是否启用
+
+      //   弹出框
+      // window.alert("我是一个警告框");
+      // window.confirm("我是一个确认框");
+      // window.prompt("我是一个提示框");//输入更合适吧
+      // window.prompt("可以换行的\n第二行")
+
+      // 定时器
+      let fnTime = () => {
+        console.log("定时器触发了");
+      };
+      let time1 = setTimeout(fnTime, 2000);
+      let time2 = setInterval(fnTime, 1000);
+      //   停止定时器
+      clearTimeout(time1);
+      clearInterval(time2);
+
+      //   cookie有两种
+      // 浏览器一般允许存放300个cookie,每个站点最多存放20个cookie,每个cookie限制4kb
+      // 会话cookie,他的数据保存在内存中,浏览器窗口一关闭,cookie销毁
+      // 持久化的cookie,可以给cookie设置生命周期,时间到了才销毁,不然就一直待在硬盘中
+
+      // cookie的实际开发:当浏览器请求服务器的数据时,服务器调用HttpServletResponse的addCookie()方法,在响应头添加一个Set-Cookie的响应字段,这个字段用于浏览器第二次访问服务器时将cookie返回给浏览器,实现用户的状态跟踪
+
+      // 创建cookie
+      // 我终于不怕你了,cookie
+      document.cookie = "userName='姚磊'";
+      document.cookie = "userAge=25";
+      document.cookie = "Like='哗哗哗'";
+      // 查看所有的cookie
+      console.log(document.cookie);
+      // 给cookie设置过期时间,UTC时间,看不懂
+      // 看懂一点,每个参数用;分隔
+      document.cookie = "Love='画画画';expires=Sun,31 Dec 2022 12:00:00 UTC";
+      // 给cookie设置路径,默认属于当前页
+      document.cookie =
+        "Loveee='画画画';expires=Sun,31 Dec 2022 12:00:00 UTC;path=/";
+      // console.log(new Date());
+      // 搞个UTC时间,鬼看得懂,害我搞半天,原来是还没创建,生命就过期了
+    </script>
+  </body>
+</html>

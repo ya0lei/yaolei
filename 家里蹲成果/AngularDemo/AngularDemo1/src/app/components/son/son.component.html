@@ -1,0 +1,9 @@
+<h3>我是子组件son1</h3>
+<!-- 父传子 -->
+<p>{{ title }}</p>
+<!-- 子传父 -->
+<!-- 写一个简单的表单事件,用户输入值,把值给父组件 -->
+<label> 姓名:<input #iptName placeholder="子传父无效" /> </label>
+<button (click)="newSon(iptName.value)">把值给父组件</button>
+<!-- 插槽占位符 -->
+<ng-content></ng-content>

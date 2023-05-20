@@ -1,0 +1,19 @@
+// 设置一个样式的变量
+// less的变量是@开头,而sass中是$
+$highlight-color:#f90; //高光
+$basic-border:1px solid #000;//重要的边框
+#app{
+    background-color: $highlight-color;
+    border:$basic-border;
+      
+}
+#content{
+    // 父子关系可以使用嵌套写法
+    //同级的话加& 
+    a{
+        color:rgb(62, 62, 200);
+        &:hover{
+            color: #f90;
+        }
+    } 
+}

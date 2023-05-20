@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      #d > * {
+        height: 20px;
+        background-color: rgb(75, 168, 45);
+      }
+    </style>
+  </head>
+  <body>
+    <p id="p">我是id=p的p标签,这是我的普通文本</p>
+    <div id="d">
+      <p id="p1">我是p标签1</p>
+      <p id="p2">我是p标签2</p>
+      <p id="p3">我是p标签3</p>
+    </div>
+    <script>
+      (function 节点基本属性() {
+        // 打印HTML节点
+        console.dir(document.documentElement);
+        // 打印body
+        console.dir(document.body);
+        // 节点名
+        // 每个节点都有nodeName,它只能被读取
+        // 标签是标签名,属性是属性名,文本是#text,文档是#document
+        console.log(p.nodeName);
+        // 文本节点使用快捷访问innerHTML,无法读取,只能使用DOM树上的结构点出来
+        console.log(p.childNodes[0].nodeName);
+        // 节点值
+        // nodeValue规定节点的值
+        //标签是undefined,属性是属性值,文本是文本
+        // 节点类型
+        // nodeType是只读的
+        // 标签是1,属性是2(DOM中已弃用),文本是3
+        // 注释是8,html是9,<!Doctype html>是10 什么鬼东西
+        console.log(p.nodeType);
+        console.log(document.nodeType);
+      })();
+      (function 创建挂载节点() {
+        // 创建节点只能创建子节点
+        // 创建div
+        let d = document.createElement("div");
+        // 放入body中
+        document.body.appendChild(d);
+        // 创建p
+        let p = document.createElement("p");
+        // 创建文本节点
+        let txt = document.createTextNode("我是创建的文本节点哈哈哈");
+        // 文本给p
+        p.appendChild(txt);
+        // p给div
+        d.appendChild(p);
+      })();
+      (function 增删改查() {
+        // 增,在某个人的前面插入
+        // 创一个h3
+        let h = document.createElement("h3");
+        h.innerHTML = "我是第四位,但我要插队";
+        d.insertBefore(h, p2);
+        // 删
+        p2.remove();
+        // 改
+        let h2 = document.createElement("h3");
+        h2.innerHTML = "换人换人";
+        d.replaceChild(h2, p1);
+      })();
+    </script>
+  </body>
+</html>

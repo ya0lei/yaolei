@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>使用jQuery的ajax</title>
+    <style>
+      button {
+        background-color: rgb(209, 184, 138);
+      }
+      #btn1,
+      #btn2,
+      #btn3,
+      #btn5 {
+        background-color: rgb(198, 144, 144);
+      }
+    </style>
+    <!-- 引入jQuery -->
+    <script src="./node_modules/jquery/dist/jquery.js"></script>
+  </head>
+  <body>
+    <button id="btn1">jq发起GET请求</button>
+    <button id="btn2">jq发起GET请求,有动态参数</button>
+    <button id="btn3">jq发起GET请求,有查询字符串</button>
+    <button id="btn4">jq发起POST请求,有请求体</button>
+    <button id="btn5">jq发起GET高级请求,有请求体</button>
+    <button id="btn6">jq发起POST高级请求,有请求体</button>
+    <script>
+      // 先用 node 启动本地的服务器 expressServe.js
+      // jQuery的ajax必须项只有参数一url
+      // 参数二:{},get中是查询字符串,post中是请求体
+      // 参数三:callback拿到node返回的数据
+      $(function () {
+        (function 普通用法() {
+          // 点击按钮发送GET
+          $("#btn1").on("click", function () {
+            $.get("http://127.0.0.1", (res) => {
+              console.log(res);
+            });
+          });
+          // 点击按钮发送GET,携带动态参数
+          $("#btn2").on("click", function () {
+            $.get("http://127.0.0.1/123", (res) => {
+              console.log(res);
+            });
+          });
+          // 点击按钮发送GET,携带查询字符串
+          $("#btn3").on("click", function () {
+            $.get("http://127.0.0.1", { name: "姚磊", age: 123 }, (res) => {
+              console.log(res);
+            });
+          });
+          // 点击按钮发送GET,携带查询字符串
+          $("#btn3").on("click", function () {
+            $.get("http://127.0.0.1/?naem=姚磊&age=13", (res) => {
+              console.log(res);
+            });
+          });
+          // 点击按钮发送POST,携带请求体
+          $("#btn4").on("click", function () {
+            $.post(
+              "http://127.0.0.1",
+              { name: "我是请求体", age: "2022年10月出生" },
+              (res) => {
+                console.log(res);
+              }
+            );
+          });
+        })();
+
+        (function 高级用法() {
+          // GET高级
+          // 整了点花活,下面这个不是标准例子
+          btn5.addEventListener("click", function () {
+            $.ajax({
+              type: "GET", //请求类型
+              url: "http://localhost/" + 123, // 请求地址,地址上拼接就有params了,地址localhost代表本机地址
+              data: {
+                name: "姚磊",
+              }, // get是查询字符串,post是请求体
+              // 成功后的callback
+              success: (res) => {
+                console.log(res);
+              },
+            });
+          });
+          // POST高级
+          // 这个老老实实写了
+          $("#btn6").on("click", function () {
+            $.ajax({
+              type: "POST",
+              url: "http://127.0.0.1",
+              data: {
+                name: "请求体",
+                age: "不到1min",
+              },
+              success: (res) => {
+                console.log(res);
+              },
+            });
+          });
+        })();
+
+        (function 发起JSONP请求() {
+          // jq发起JSONP请求时,在<header>中生成了<script>>
+          // jq的JSONP请求成功时,移除<script>
+          // 可能是node端不匹配,显示跨域...
+          $.ajax({
+            url: "http://127.0.0.1/jsonp?callback=aaa",
+            dataType: "jsonp",
+            // jsonp:'callback',//可不写,自定义callback名字
+            // jsonCallback:"aaa",//可不写,自定义callback函数
+            success: (res) => {
+              console.log(res);
+            },
+          });
+        })();
+      });
+    </script>
+  </body>
+</html>

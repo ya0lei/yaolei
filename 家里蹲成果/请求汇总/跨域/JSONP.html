@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p id="p"></p>
+    <script>
+      // JSON,一种存储和交换数据的语法
+      // JSON值不支持undefined,函数,日期
+      // JSON所有的属性和值都要加"",除了null,数字,布尔值
+      // 存储数据时,存为文本绝对靠谱,对象就是不可存的,localStorage存复杂数据的时候就可以用到JSON
+
+      // JSON对象,它外面被{}包裹,里面是键值对
+      // 键必须是字符串,键必须满足JSON数据的要求
+      // JSON由对象标记法衍生而来,所以它可以使用js的语法
+      // JSON还可以使用for in
+      // JSON中删除数组某一项使用 delete
+
+      // 浏览器和服务器通信的时候,数据只能是文本,JSON可以把任何数据转换成文本,还能再转回来
+      let obj = { name: "姚磊", age: 13 };
+      // 数据变JSON格式
+      console.log((obj = JSON.stringify(111)));
+      // JSON格式变回来
+      console.log((obj = JSON.parse(obj)));
+
+      //  JSONP
+      // 解决跨域问题
+      // 只能GET
+      // JSONP实现原理,为了网络安全,W3C组织制定了同源策略,协议||域名||端口不同的网址不允许通信,这叫跨域
+      // 这个跨域有一个漏洞,script的src不受影响,我们可以在本地创建一个函数,在浏览器向服务器要数据的时候,服务器返回一个函数的调用,这个函数调用里面的传参是数据,这样一来,数据就被保存到本地的函数中了
+
+      //   由此可见,location保存的是当前文件的url
+      console.log(location);
+      p.innerHTML = location;
+      window.status = "你好啊大傻瓜";
+    </script>
+  </body>
+</html>

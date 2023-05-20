@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery.js"></script>
+</head>
+
+<body>
+    <!-- 1.点击获取所有图书列表 -->
+    <!-- 2.查询其中某一个图书的信息 -->
+    <button>按钮</button>
+</body>
+<script>
+    // 注册点击事件
+    $('button').on('click', function () {
+        // 假设需要4个ajax请求, 第四个的数据依赖第三个ajax结果, 第三个ajax依赖第二个ajax结果, 第二个ajx数据要依赖第一个ajax结果
+        // 上述问题就是ajax回调地狱的问题
+
+        // Promise构造函数就是为了解决ajax回调地狱的问题, 让代码可读性,可维护性更高
+
+        // 1.先发ajax获取所有图书信息
+        const pro = new Promise((resolve, reject) => {
+            $.ajax({
+                type: "get",
+                url: "http://www.liulongbin.top:3006/api/getbooks",
+                success: function (res) {
+                    // 写各种业务逻辑, 现在被resolve函数调用代替
+                    resolve(res)
+                    // 以前的回调地狱
+                    // $.ajax({
+                    //     type: "get",
+                    //     url: "http://www.liulongbin.top:3006/api/getbooks",
+                    //     data: {
+                    //         author: res.data[2].author
+                    //     },
+                    //     success: function (res) {
+                    //         console.log(res);
+                    //     }
+                    // });
+                },
+                error: function (err) {
+                    // 写业务逻辑, 现在被reject函数调用代替
+                    // reject(err)
+                }
+            });
+        })
+        pro
+            .then(res => {
+                // 业务逻辑,  res就是上面resolve函数调用传递过来的实参
+                // 想写啥写啥
+                // 继续发送ajax, 依赖的参数就是第一次ajax的res值
+                $.ajax({
+                    type: "get",
+                    url: "http://www.liulongbin.top:3006/api/getbooks",
+                    data: {
+                        author: res.data[2].author
+                    },
+                    success: function (res) {
+                        return res
+                    }
+                });
+            })
+            .then(res => {
+                // 拿到第二次ajax获取的参数, 进行业务逻辑的处理
+                $.ajax({
+                    type: "get",
+                    url: "http://www.liulongbin.top:3006/api/getbooks",
+                    data: {
+                        // 参数
+                    },
+                    success: function (res) {
+                        return res
+                    }
+                });
+            })
+
+            .catch(err => {
+                // 业务逻辑, err就是上面reject函数调用传递过来的实参
+                console.log(err.statusText);
+            })
+    })
+</script>
+<!-- <script src="./promis.js"></script> -->
+
+</html>

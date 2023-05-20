@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // axios是专门用来处理请求的,永远的神
+      // axios基于原生XMLHttpRequest和promise封装
+
+      function 分开使用的语法() {
+        // GET
+        axios
+          .get("url", {
+            params: {
+              // 请求参数
+            },
+          })
+          .then((res) => {
+            // res就是axios包装后的响应回来的响应体
+            // res.data是真正的数据
+            console.log(res);
+          });
+
+        // POST
+        axios
+          .post("url", {
+            // 发送给服务器的参数
+            name: "小智",
+            age: 10,
+          })
+          .then((res) => {
+            // res是响应体,res.data是响应数据,一般为添加成功等字样
+            console.log(res);
+          });
+      }
+
+      function 直接使用的语法() {
+        // 直接使用的语法
+        // GET
+        axios({
+          method: "GET",
+          url: "http://www.liulongbin.top:3006/api/",
+          params: {
+            // 请求参数
+            name: "zs",
+          },
+        }).then((res) => {
+          // 响应体
+          console.log(res);
+        });
+
+        // POST
+        axios({
+          method: "POST",
+          url: "http://www.liulongbin.top:3006/api/",
+          data: {
+            // 给浏览器的参数
+          },
+        }).then((res) => {
+          // 响应体
+          console.log(res);
+        });
+      }
+
+      // 具体的看axiois中文文档
+    </script>
+  </body>
+</html>

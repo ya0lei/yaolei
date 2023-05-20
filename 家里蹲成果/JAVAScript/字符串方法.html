@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 字符串可以是一个对象
+        let str2=new String("对象创建字符")
+      // 字符串,用引号包裹
+      // 字符串中想表示",使用转义符\"
+      let str = "爱我大中华iiiIII";
+      let str1 = "i Love You";
+      let str3 = "文件}][安的什么,拉丁名]偶然间偶尔奇偶位金融二";
+      str += '"(中国)"';
+      // 查找字符串中的字符,找到返回索引,找不到返回-1
+      console.log(str.indexOf("中国"));
+      //   从第二个参数的索引开始查找
+      console.log(str.indexOf("中国", 5));
+      // 从后向前找
+      console.log(str.lastIndexOf("中国"));
+      // search可以正则找,
+      console.log(str.search("中国"));
+      console.log(str.search(/中国/i));
+      // 截取字符串,都不改变 原数组,返回截取的字符
+      // slice,第一个参数:从索引1开始截取,第二个参数:到索引3结束
+      // 只有一个参数时默认从索引1开始全部截取
+      console.log(str.slice(1, 3));
+      // 同slice,但他无法接受负的索引
+      console.log(str.substring(1, 3));
+      // 同slice,但第二个参数是截取的长度
+      console.log(str.substr(1, 4));
+      // 替换字符串,返回新字符串
+      console.log(str.replace("中国", "枞阳"));
+      // 配合正则
+      // 全局匹配
+      console.log(str.replace(/i/g, "爱"));
+      // 大小写全匹配
+      console.log(str.replace(/i/gi, "爱"));
+      // 将字符串转大小写
+      console.log(str1.toUpperCase());
+      console.log(str1.toLowerCase());
+      // 连接两个字符串或数组,中间的引号可以替换成任意的分隔符
+      console.log(str.concat("", str1));
+      // 去除两端的空格
+      console.log("  哈哈 哈 ".trim());
+      // 提取指定下标的字符
+      console.log("我是大傻蛋".charAt(3));
+      // 提取指定下标字符的ask码
+      console.log("我是大傻蛋".charCodeAt(3));
+      // 字符转数组
+      console.log("我是大傻蛋".split(""));
+      console.log(str3.split(","));
+      console.log(str1);
+      console.log(str);
+      (function 字符串牛逼用法() {
+        let str = "我哈哈我你哦他时杀当我";
+        // 找到符合条件的第一个字符,返回数组
+        console.log(str.match(/我/g));
+        // 找到符合条件的字符,返回true
+        console.log(str.includes("我是"));
+        // 判断字符是否以什么开头,从下标1开始找
+        console.log(str.startsWith("哈哈", 1));
+        // 判断字符是否以什么结尾,在前3个字符中找
+        console.log(str.endsWith("哈哈", 3));
+        // 模板字符串
+        // 支持引号,换行,变量
+        console.log(`我是模板字符 
+        串"哈哈"'黑'${1 - 2 > 0 ? "正数" : "负数"}`);
+      })();
+      (function ES6新增(){
+        // 首或尾填充,只能为数字进行填充,感觉是个废物
+        let str='1'
+        console.log(str.padStart(4,2));
+        console.log(str.padEnd(4,0));
+        console.log(str);
+       
+      })()
+    </script>
+  </body>
+</html>

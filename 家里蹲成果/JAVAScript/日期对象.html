@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+        // js的月份是从0开始,11结束,难怪他们要月份加1
+      (function 四种日期创建() {
+        // 日期对象竟然是静态的,但是他会刷新,网页一刷新就又变成当前时间了
+        // 1.当前时间创建
+        console.log(new Date());
+        // 日期对象有丰富的创建方式
+        // new Date(year,month,day,hour,minute,second,millisecond)
+        // 只提供一个参数时,默认为毫秒数,所以写年份时不能省略月份,而且传入的参数是有进制的,注意
+        // 2.指定年月日创建
+        console.log(new Date(2018, 10, 22, 4, 30, 6, 1));
+        // 3.毫秒数创建
+        console.log(new Date(1));
+        // 4.日期字符串创建,先空着
+        console.log(new Date().toString());
+
+        // 日期对象可以是负数,1970-参数
+        console.log(new Date(-1));
+      })();
+
+      (function 转换日期格式() {
+        let data = new Date();
+        // 转UTC
+        console.log(data.toUTCString());
+        // 转成简易的
+        console.log(data.toDateString());
+        console.log(data);
+      })();
+
+      (function 日期格式() {
+                    // (YYYY-MM-DD)国际化的日期格式,也是首选的js格式
+          console.log(new Date('2018-10-11'));
+        //   完整写法,日期和时间用T分隔
+        console.log(new Date("2018-12-01T12:11:01"));
+        // 还可以接受完整js格式的时间,会自动修正时间错误
+        console.log(new Date("Fri Mar 26 2018 09:56:24 GMT+0100 (Tokyo Time)"));
+      })();
+    //   日期可以生成1970年之前的时间
+      console.log(new Date("1000-6"));
+      (function 获取设置日期对象的信息(){
+        let time=new Date()
+        // 获取1970-01-01至今的毫秒数
+            console.log(time.getTime());  
+            console.log(
+            time.getFullYear(),// 获取完整年份
+            time.getMonth(), // 获取月份
+            time.getDay(),// 获取星期
+            time.getDate(),//获取天
+            time.getHours(),// 获取小时
+            time.getMinutes(), // 获取分钟
+            time.getSeconds(),// 获取秒
+            time.getMilliseconds() // 获取毫秒
+            );    
+            // 设置就是修改日期对象的年月日的信息,关键词get改成set就ok
+            // 返回毫秒数,改变原对象
+            console.log(time.setFullYear(1998));
+            console.log(time);
+      }())
+    </script>
+  </body>
+</html>

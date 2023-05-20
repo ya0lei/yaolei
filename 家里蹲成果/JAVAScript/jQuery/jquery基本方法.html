@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./node_modules/jquery/dist/jquery.js"></script>
+    <style>
+      .one {
+        height: 60px;
+        background-color: rgb(214, 172, 172);
+      }
+      #am {
+        width: 50px;
+        height: 50px;
+        background-color: rgb(158, 225, 207) !important;
+        position: relative;
+      }
+      #cs {
+        width: 50px;
+        height: 50px;
+        background-color: rgb(45, 169, 62) !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="one">标签div,类名one</div>
+    <div class="two">标签div,类名two</div>
+    <div id="dd">标签div,id时dd</div>
+    <div>标签div</div>
+    <div>标签div</div>
+    <p class="one">标签怕,类名one</p>
+    <p class="one">标签怕,类名one</p>
+    <p class="one">标签怕,类名one</p>
+    <a href="aaa">我是aaa</a><br />
+    <input type="text" />
+    <div id="dd2">我是标签div</div>
+    <div id="am">animate</div>
+    <div id="cs">css样式</div>
+    <button id="btn1">隐藏</button>
+    <button id="btn2">显示</button>
+    <button id="btn3">切换1</button><br />
+    <button id="btn4">淡入</button>
+    <button id="btn5">淡出</button>
+    <button id="btn6">切换2</button>
+    <button id="btn7">透明度</button><br />
+    <button id="btn8">滑入</button>
+    <button id="btn9">滑出</button>
+    <button id="btn10">切换3</button><br />
+    <button id="btn11">动画</button>
+    <button id="btn12">暂停动画</button><br />
+    <button id="btn13">链式操作</button>
+    <button id="btn14">删除所有div</button>
+
+    <script>
+      // 使用npm库点出jquery.js,成功导入
+      // $代表jquery,有的库也是使用$,为了不冲突,可以自定义名
+      // 将$改为jq
+      // var jq = jQuery.noConflict();
+      // console.log($);
+
+      // jquery获取元素,修改背景色
+      // $(this) 选择当前的元素
+      $("div").css("background-color", "red"); //标签
+      $(".two").css("background-color", "blue"); // 类名
+      $("#dd").css("background-color", "yellow"); // id
+      $("div.one").css("background-color", "#ccc"); // 标签和类名
+      $("[href]").css("background-color", "#234"); // 属性为href的
+
+      //   绑定事件
+      //   让文档先加载
+      $(document).ready(function () {
+        (function 显示隐藏() {
+          // 消失隐藏可选参数,"fast"快,"slow"慢,1000数值
+          // 点击按钮让p消失
+          $("#btn1").click(function () {
+            $("p").hide(2000);
+          });
+          // 点击按钮让p出现
+          $("#btn2").click(function () {
+            $("p").show();
+          });
+          // 所有的p绑定点击,当前p消失
+          $("p").click(function () {
+            $(this).hide();
+          });
+          // 这个牛逼,切换:显示隐藏取反,显示的隐藏,隐藏的显示
+          // 也可以设置速度
+          $("#btn3").click(function () {
+            $("p").toggle(500);
+          });
+          // 淡入
+          // 原来淡入淡出也是把元素剔除了,不是单纯的看不见
+          $("#btn4").click(function () {
+            $("p").fadeIn();
+          });
+          // 淡出
+          $("#btn5").click(function () {
+            $("p").fadeOut();
+          });
+          // 切换
+          $("#btn6").click(function () {
+            $("p").fadeToggle(1000);
+          });
+          // 这个牛逼,可以设置透明度
+          $("#btn7").click(function () {
+            $("p").fadeTo(1000, 0.7);
+          });
+          //   滑入,滑出,切换,除了设置时间,还可设置第二个参数:需要执行的函数
+          //   滑入
+          $("#btn8").click(function () {
+            $("div.one").slideUp();
+          });
+          //   滑出
+          $("#btn9").click(function () {
+            $("div.one").slideDown();
+          });
+          //   滑动滑出
+          $("#btn10").click(function () {
+            $("div.one").slideToggle(1000, () => {
+              console.log("我出来了,哎,我又回去了");
+            });
+          });
+        })();
+        (function 鼠标事件or获取更改内容() {
+          // html(),text(),val();()内不传值获取当前元素的内容
+          // html("哈哈哈")可以修改内容为哈哈哈
+          // html,text,val()内可以传入函数,函数参数一:被选元素列表中当前元素的下标;参数二:未被更改的text;return的函数返回值会被text()接收,从而修改元素的text
+          // 双击
+          $("div").dblclick(() => {
+            $("div.one").text((i, old) => {
+              console.log(i, old);
+              return "哈哈哈";
+            });
+            console.log(111);
+          });
+          // 获得焦点
+          $("input").focus(() => {
+            console.log($("input").val()); // 获取val
+          });
+          // 鼠标悬停
+          $("div").mouseover(() => {
+            $("div.two").html("我的div兄弟们被折辱了"); // 修改html
+          });
+        })();
+        (function 动画() {
+          $("#btn11").click(() => {
+            // 参数1:{样式}
+            // 可以+=数值,数值可以是show,hide,toggle
+            // 参数2:速度;可以省略不写
+            // 参数3:callback
+            // 动画可以多个,从上到下执行
+            $("#am").animate(
+              {
+                left: "150px",
+                width: "+=50px",
+                height: "toggle",
+              },
+              1000,
+              function () {
+                console.log("动画第一次执行");
+              }
+            );
+            // 第二个
+            $("#am").animate(
+              {
+                left: "50px",
+                right: "50px",
+                width: "-=30px",
+                height: "toggle",
+              },
+              3000,
+              () => {
+                console.log("执行第二次动画");
+              }
+            );
+          });
+          // 暂停动画
+          // 会将div的样式定格在那一刻
+          $("#btn12").click(() => { 
+            // 停止当前正在执行的,后面还没开始的动画还是会执行
+            // $("#am").stop()
+            // 停止所有的动画
+            // $("#am").stop(true)
+            // 停止所有动画,并得到当前正在执行动画的结果
+            $("#am").stop(true, true);
+          });
+        })();
+        (function 链式() {
+          // jQuery是链式编程,每次执行完操作都会返回它自己,所以可以一直对一个dom点点点
+          $("#btn13").click(() => {
+            $("#am").css("color", "red").slideUp(2000).slideDown(2000);
+          });
+        })();
+        (function 获取更改内容() {
+          $("#dd2").click(() => {
+            $("#dd2").text("伟大的html和text");
+          });
+          $("input").focus(() => {
+            $("input").val("伟大的val");
+          });
+        })();
+        (function css样式() {
+          // 使用jQuery设置样式
+          // css("font-size","20px")
+          // 样式名使用-隔开,如font-size,background-color
+          // 竟然被我猜到了,css()可以传一个对象
+          $("#cs").css({ width: "100px", height: "100px" });
+        })();
+        (function 操作DOM() {
+          // 删
+          $("#btn14").click(function () {
+            $("div").remove();
+          });
+          //   获取父元素
+          //   div1的父是body
+          let myParent = $("div.one").parent();
+          console.log(myParent);
+        })();
+      });
+    </script>
+  </body>
+</html>

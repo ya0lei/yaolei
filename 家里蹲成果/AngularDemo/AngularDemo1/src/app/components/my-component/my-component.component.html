@@ -1,0 +1,137 @@
+<h2>Angular学习1</h2>
+<p>我是自定义的组件</p>
+<!-- 插值表达式 -->
+<p>{{ message }}</p>
+<p>{{ data.name || data.age }}</p>
+<p>{{ data.date }}</p>
+<!-- 动态属性 -->
+<p [id]="id">有id的</p>
+<!-- 动态类名 -->
+<p [ngClass]="{ red: flag, big: !flag }">动态设置class,对象格式</p>
+<!-- 动态类名无判断 -->
+<p [ngClass]="['red', 'big']">动态设置class,数组格式</p>
+<!-- 动态样式 -->
+<div [ngStyle]="{ color: '#0ff', background: className.black }">样式绑定</div>
+<!-- html格式内容 -->
+<div [innerHTML]="content">我是div</div>
+<!-- 循环 -->
+<ul>
+  <li *ngFor="let list of lists; let key = index">{{ list.name }}</li>
+</ul>
+<ul>
+  <!-- index索引,odd当前索引是否是偶数, -->
+  <!-- 注意:其实odd判断的是,当前循环次数是不是奇数, 因为索引从0开始,所以简单理解为:odd判断 当前索引是否是偶数-->
+  <li
+    *ngFor="
+      let list of lists;
+      let index = index;
+      let odd = odd;
+      let key = index
+    "
+  >
+    {{ list.name + " 偶数? " + odd + " 索引: " + index }}
+  </li>
+</ul>
+<!-- if判断 -->
+<div *ngIf="flag">if判断显示隐藏</div>
+<!-- 自定义事件 -->
+<button (click)="btn()">弹框显示message</button>
+<!-- 自定义事件带参数,$event表示当前的事件对象 -->
+<button (click)="btn2($event)">后台打印e</button><br />
+<!-- 表单事件 -->
+<!-- input标签要写一个title或者placeholder,不然报错 -->
+姓名:<input type="text" (input)="inputFn($event)" title="标题" /><br />
+<!-- 表单数据的双向绑定 -->
+<!--  想使用表单双向绑定需要在app.module.ts文件中引入表单模块,并在@NgModule中引入 -->
+年龄:<input [(ngModel)]="inputValue" type="text" placeholder="请输入" />
+<p>这里的值跟随表单value---- {{ inputValue }}</p>
+
+<hr />
+<!-- 模板变量 -->
+<!-- 不就是id吗,给他起个名字,可以在ts中获取他 -->
+<!-- 估计是vue的ref -->
+年龄:<input
+  #inputName
+  type="text"
+  placeholder="模板变量"
+  (input)="inputFn2(inputName)"
+/><br />
+<hr />
+
+<h3>表单控件</h3>
+<!-- 表单控件 -->
+<!-- 1.需要在app.module.ts文件中引入表单模块ReactiveFormsModule,并在@NgModule中引入 -->
+<!-- 2.需要在当前组件的ts文件中引入FormControl -->
+<!-- 3.需要在当前组件的ts文件中书写一个表单控件的实例,如:  color:FormControl=new FormControl(''); -->
+颜色:<input type="text" placeholder="请输入" [formControl]="color" />
+<p>这里的值跟随表单color----{{ color.value }}</p>
+<button (click)="btn3()">修改颜色</button><br />
+
+<h3>表单控件分组</h3>
+<!-- 表单控件分组 -->
+<!-- 1.需要在当前组件的ts文件中引入FormGroup -->
+<!-- 2.需要在当前组件的ts文件中书写一个表单控件分组的实例,如:自己去ts文件看 -->
+<form action="" [formGroup]="loginFrom">
+  <label> 用户名:<input type="text" formControlName="username" /> </label>
+  <label> 密码:<input type="text" formControlName="password" /> </label>
+  <button (click)="submitFn()">打印用户名和密码</button>
+</form>
+<hr />
+
+<h3>表单验证</h3>
+<!-- ngModel内置了3个类名,可以通过类名来设置表单在不同状态下的样式 -->
+<!-- 可以使用交集选择器来指定input -->
+<!-- 控件是否被访问: true: ng-touched false: ng-untouched -->
+<!-- 控件值是否变化: true: ng-dirty false: ng-pristine -->
+<!-- 控件值是否有效: true: ng-valid false: ng-invalid -->
+<form action="">
+  <!-- input必须使用#name="ngModel",才可以获取ngModel绑定的值 -->
+  <label>
+    用户:<input
+      class="ipt"
+      required
+      #nameInput="ngModel"
+      [(ngModel)]="fromData.name"
+      name="username"
+      type="text"
+  /></label>
+  <!-- 验证是否通过 -->
+  <span *ngIf="!nameInput.valid">验证未通过</span><br />
+  <label>
+    密码:<input
+      required
+      #passwordInput="ngModel"
+      [(ngModel)]="fromData.password"
+      name="password"
+      type="text"
+  /></label>
+  <span>验证通过?{{ passwordInput.valid }}</span>
+</form>
+
+<hr />
+<h3>自定义表单验证</h3>
+<!-- 1.需要在当前组件的ts文件中引入Validators,FormBuilder -->
+<!-- 2.需要为class添加constructor,具体自己看 -->
+<!-- 3.表单元素绑定valiDataForm,想要获取表单元素使用valiDataForm.value -->
+<form action="" [formGroup]="valiDataForm">
+  <label> 用户:<input type="text" formControlName="username" /> </label><br />
+  <!-- 利用三元表达式判断错误信息是否存在,存在输出提示 -->
+  <!-- 这些东西都是看控制台点出来的,别怕 -->
+  <p *ngIf="valiDataForm.get('username')?.errors?.['required']">请输入账号</p>
+  <p
+    *ngIf="valiDataForm.get('username')?.errors?.['minlength']?.actualLength||valiDataForm.get('username')?.errors?.['maxlength']?.actualLength"
+  >
+    用户名长度需在3-8位
+  </p>
+  <label> 密码:<input type="text" formControlName="password" /> </label><br />
+  <p *ngIf="valiDataForm.controls['password'].errors">
+    {{ valiDataForm.controls["password"]?.['errors']?.['passwordValidator']?.['desc'] }}
+  </p>
+  <label> 号码:<input type="text" formControlName="phone" /> </label><br />
+
+  <p *ngIf="valiDataForm.get('phone')?.errors?.['required']">请输入手机号</p>
+  <p *ngIf="valiDataForm.get('phone')?.errors?.['desc']=='号码必须为11位'">
+    手机号必须为11位
+  </p>
+  <button (click)="valiDataFormFn()">打印表单信息</button><br />
+</form>

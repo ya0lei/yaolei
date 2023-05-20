@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>使用node的Express.CORS解决跨域</title>
+    <!-- 引入axios线上版 -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <button id="btnGet">发送GET请求</button>
+    <button id="btnPost">发送POST请求</button>
+    <button id="btnJson">使用JSONP实现GET请求的跨域</button>
+    <script>
+      // 点击按钮GET
+      btnGet.addEventListener("click", function () {
+        axios
+          .get("http://127.0.0.1/get/", {
+            params: {
+              // 请求参数
+            },
+          })
+          .then((res) => {
+            // res就是axios包装后的响应回来的响应体
+            // res.data是真正的数据
+            console.log(res);
+          });
+      });
+
+      // 点击按钮POST
+      btnPost.addEventListener("click", function () {
+        axios
+          .post("http://127.0.0.1/post", {
+            // 发送给服务器的参数
+            name: "小智",
+            age: 10,
+          })
+          .then((res) => {
+            // res是响应体,res.data是响应数据,一般为添加成功等字样
+            console.log(res);
+          });
+      });
+      // 点击按钮JSONP
+      // 震惊,axios不支持JSONP!!
+      // 等老子学习ajax再回来!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    </script>
+  </body>
+</html>

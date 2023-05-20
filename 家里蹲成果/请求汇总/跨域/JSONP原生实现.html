@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 容器 -->
+    <div id="dd">{adfas}dsaf</div>
+    <!-- JSONP原理 -->
+    <!-- 首先,我们要知道,script无论有多少个,他们的元素都是共享的 -->
+    <!-- 网址不同,同源策略把数据拦截了,但是用script的src去请求一个网址,倒是没有跨域,所以我们就在服务器写个函数的调用,函数调用的参数是data,本地的函数log(参数),数据就被客户端拿到了 -->
+    <!-- 就像下面这样 -->
+    <script>
+      // 客户端动态生成的script
+      function bbb(res) {
+        console.log("客户端的函数调用成功");
+        console.log(res);
+        // 哈哈,原来json就可以
+        dd.innerText = JSON.stringify(res);
+      }
+    </script>
+    <!-- <script>
+        // 服务器上的script,当然,服务器上的这玩意肯定不是js写的,那就不管我们事了
+        // 这里的script在实际开发中应该是向服务器请求一个src地址,并 ?callback=abc(),使用这个查询字符串去找到我们需要的callback函数,如果服务器上的src只有一个 abc() 函数,就不用查询字符串了,但这不现实
+        let obj = {
+            name:"皮卡丘",
+            age:"3岁"
+        }
+        abc(obj)
+    </script> -->
+    <!-- node搭建了服务器,接下来就是见证奇迹的时刻 -->
+    <!-- 使用script.src去get服务器的数据 -->
+    <script src="http://127.0.0.1/jsonp?callback=bbb" id="jsonStr"></script>
+  </body>
+</html>

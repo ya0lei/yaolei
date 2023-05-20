@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function 基本方法() {
+        let arr = [0, 1, 2, 3];
+        //   给数组添加一个下标过大的值,中间部分会变成empty
+        arr[6] = 123;
+        //   尾部添加
+        arr.push(1233);
+        //   尾部添加
+        arr[arr.length] = 1244;
+        console.log(arr);
+        //   判断一个对象是否是数组,Array.isArray
+        console.log(Array.isArray(arr));
+        // 手写一个isArray
+        // 原理:看对象原型上是否有Array
+        function 手写isArray(arr) {
+          console.log(arr.constructor.toString().indexOf(Array) > -1);
+        }
+        手写isArray(arr);
+      }
+      基本方法();
+
+      function 增删改() {
+        let arr = [1, 2, 3, 4];
+        // 数组变字符串,不改变原数组,返回将数组去掉[]的字符串
+        console.log(arr.toString());
+        // 数组元素连接成字符串,可以规定连接的符号,不改变原数组
+        console.log(arr.join("😀"));
+        // 尾部删除,返回被删的元素,改变原数组
+        console.log(arr.pop());
+        // 尾部添加,返回数组长度,改变原数组
+        console.log(arr.push("44"));
+        // 头部删除,返回被删的元素,改变原数组
+        console.log(arr.shift());
+        // 头部添加,返回数组长度,改变原数组
+        console.log(arr.unshift("11"));
+        // 删,delete会留下空位,不知道返回的什么玩意,改变原数组
+        console.log(delete arr[1]);
+        // 最牛逼,splice移接
+        // 参数1:哪个下标位置,参数2:删几个,参数3,4:添加的元素
+        // 返回被移接的元素组成的数组,改变原数组
+        console.log(arr.splice(0, 1, "你好哇", "空你吉瓦"));
+        // 截取,splice的小弟
+        // 参数1:从下标几的元素开始一直截取到最后一位,参数2:规定下标几结束
+        // 返回截取的数组,不改变原数组
+        console.log(arr.slice(0, 2));
+        console.log(arr);
+      }
+      增删改();
+
+      function 冷门() {
+        let arr1 = [0, 1, 2, 3];
+        let arr2 = ["00", 11, 22, 33];
+        let arr3 = ["000"];
+        let arr4 = [
+          "对的",
+          NaN,
+          "a",
+          "empty",
+          { 1: 111 },
+          ["e31", 111, 34],
+          true,
+          false,
+          null,
+          undefined,
+          "成成哈",
+          9,
+          111,
+          25,
+          303,
+          31,
+          "老杜",
+          "A",
+          "B",
+          "b",
+        ];
+        let arr5 = [
+          { type: "A", year: 5 },
+          { type: "C", year: 2 },
+          { type: "B", year: 12 },
+        ];
+        // 合并数组,返回合并的数组,不改变原数组
+        console.log(arr1.concat(arr2, arr3));
+        // 数组排序,并不靠谱呀
+        // sort会将数字放到前面,在依次对数字的个十百位比较大小,小的排前面
+        // 数字=>数组首位是啥就在哪=>NaN=>对象=>'abc'=>false=>null=>true=>'中文字符'=>undefined
+        console.log(arr4.sort());
+        // 翻转数组,返回翻转后的数组,改变原数组
+        console.log(arr1.reverse());
+        // 让sort变得靠谱
+        console.log(
+          arr4.sort(function (a, b) {
+            return a - b;
+          })
+        );
+        // console.log('随机数:'+Math.random());
+        // 数组最大值
+        console.log(Math.max.apply(null, arr1));
+        // 数组最小值
+        console.dir(Math.min.apply(null, arr1));
+        // apply到底是个啥,它改变了this指向,然后传参,这样数组就可以使用数字的方法了,那么this指向谁已经不重要了,重要的是,我apply传参是数组,你Math就用吧,直接求最大/最小值
+        // 瞎猜:apply把数组的[]去掉,
+        // max比较里面的数值大小,有字符时直接比较失败,报NaN
+        console.log(Math.max("1111", 2, 34));
+        // sort可以比较数组中对象的属性大小,属实牛逼
+        // 返回比较排序后的数组(可以理解为返回排序完成的原数组),改变原数组
+        console.log(
+          arr5.sort(function (a, b) {
+            return a.year - b.year;
+          })
+        );
+        // sort可以比较数组中对象的字符串属性大小,无敌啊,我都看不懂
+        // 大师,我悟了,先将他们都变成小写,在对比,手动返回-值,0,+值,从而让sort知道值之间的大小,原来字符串可以用>,<我很惊讶,而且小写的字母>大写的
+        console.log("中文" > "a", "a" > "A");
+        // 返回比较排序后的数组(可以理解为返回排序完成的原数组),改变原数组
+        function 比较数组对象属性字符类型(arr) {
+          arr.sort(function (a, b) {
+            let x = a.type.toLowerCase();
+            let y = b.type.toLowerCase();
+            if (x > y) {
+              return 1;
+            }
+            if (x < y) {
+              return -1;
+            }
+            return 0;
+          });
+          return arr;
+        }
+        console.log(比较数组对象属性字符类型(arr5));
+        console.log(arr1);
+      }
+      冷门();
+      function 手写max(arr) {
+        // 遍历数组
+        let maxV = arr[0];
+        arr.forEach(function (item) {
+          if (item > maxV) {
+            maxV = item;
+          }
+        });
+        return maxV;
+      }
+      let result = 手写max([1, 222, 3, 43.1]);
+      // console.log(result);
+
+      function 手写min(arr) {
+        let minV = Infinity;
+        let i = arr.length;
+        while (i--) {
+          if (arr[i] < minV) {
+            minV = arr[i];
+          }
+        }
+        return minV;
+      }
+      // console.log(手写min([1,2,3,4]));
+
+      function 数组遍历() {
+        let arr = ["90", 711, "发放", "232", 5, 4];
+        // for遍历数组
+        for (i = 0; i < arr.length; i++) {
+          console.log(arr[i]);
+        }
+        // for in遍历
+        for (k in arr) {
+          console.log(arr[k] + "  索引" + k);
+        }
+        // foreach遍历
+        arr.forEach(function (item, index, array) {
+          console.log(item, index, array);
+        });
+        // map方法
+        // forEach的升级
+        // return出来的值会组成一个新数组,不会改变原数组
+        let arr2 = arr.map(function (item, index, array) {
+          return item * 2;
+          console.log("每一项:" + item, "索引" + index, array);
+        });
+
+        console.log(arr);
+      }
+      数组遍历();
+
+      function 数组遍历过滤() {
+        let arr = [0, 1, 2, 3, 4, "function(i){return 1}"];
+        // filter过滤器
+        // map方法的升级
+        // return后面的表达式为true时,item成为被选召的孩子,去组成新的数组,不改变原数组
+        let arr2 = arr.filter(function (item, index, array) {
+          return index > 2;
+        });
+        console.log(arr2);
+        // reduce 减少(其实就是求和)
+        // 减少:指把数组🥲变成一个数值
+        // 比map多一个参数total:总数,默认为0,total也是上一次函数执行完return的返回值,不改变原数组
+        let result = arr.reduce(function (total, item, index, array) {
+          return total + item;
+        });
+        console.log(result);
+        // total可以修改默认值,就写在函数表达式的后面,用逗号分隔,随便写啥,字符都给你加,减也可以,没想到😃
+        let result2 = arr.reduce(function (total, item, index, array) {
+          return total - item;
+        }, "100000");
+        console.log(result2);
+        // reduce还可以从右向左计算,感觉没啥用呢
+        // 反过来total默认值变成数组最右边那个值,但是手动添加total就没这个效果了
+        let result3 = arr.reduceRight(function (total, item, index, array) {
+          return total - item;
+        });
+        console.log(result3);
+
+        // every检查数组每一个是否都合格,类似于&&
+        // 和filter一个尿性,只要return后面的表达式结果为true,就过关
+        // 返回结果为true/false,不改变原数组
+        let result4 = arr.every(function (item, index, array) {
+          return 1;
+        });
+        console.log(result4);
+
+        // some检查数组是否至少有一个合格,类似于||
+        // 判断机制和filter一个尿性
+        let result5 = arr.some(function (item, index, array) {
+          return 0;
+        });
+        console.log(result5);
+
+        // indexOf查找数组中某一个值的索引,找到返回第一个索引,找不到-1
+        console.log(arr.indexOf("function(i){return 1}"));
+        // 第二个参数:从下标几开始向右找
+        // 注意,第二个参数取负值代表从右边开始倒数第几个数,-1代表右边倒数第一个数
+        console.log(arr.indexOf("function(i){return 1}", -6));
+        // indexOf还可以从右向左找
+        console.log(arr.lastIndexOf("function(i){return 1}", -1));
+
+        // find查找数组中满足条件的某一个值,并返回他,没有返回undefined
+        // 相当于map版本的indexOf
+        // 判断机制于filter同样的尿性
+        let result6 = arr.find(function (item, index, array) {
+          return 0;
+        });
+        console.log(result6);
+
+        // findIndex同上,不过人家返回的是索引,找不到返回-1
+        let result7 = arr.findIndex(function (item, index, array) {
+          return 0;
+        });
+        console.log(result7);
+        console.log(arr);
+      }
+
+      数组遍历过滤();
+      (function es6新增(){
+        // 查找数组是否具有某一个元素,找到返回true
+        let arr=[0,1,2,34,5];
+        console.log(arr.includes(34));
+      })()
+    </script>
+  </body>
+</html>

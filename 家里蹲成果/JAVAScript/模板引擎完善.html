@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 1.容器 -->
+    <div id="dd">容器</div>
+    <!-- 2.模板 -->
+    <script type="text/html" id="content">
+      <div>你的名字:{{name}}</div>
+      <div>你的年龄:{{age}}</div>
+      <div>你的爱好:{{love}}</div>
+    </script>
+    <!-- 3.模板放入容器 -->
+    <script type="text/javascript">
+      function 替换模板内容(id, data) {
+        let reg = /{{([a-zA-Z]+)}}/; // 定义正则reg
+        let con = id.innerHTML; // 模板内容
+        // regRes[0]:{{name}} regRes[1]:name
+        while ((regRes = reg.exec(con))) {
+          con = con.replace(regRes[0], data[regRes[1]]);
+          console.log(regRes); // 正则匹配结果
+        }
+        return con;
+      }
+      // 1.定义数据
+      let data = { name: "姚磊", age: "13", love: "代码" };
+      // 替换内容的模板放入容器
+      dd.innerHTML = 替换模板内容(content, data);
+    </script>
+  </body>
+</html>

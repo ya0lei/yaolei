@@ -1,0 +1,10 @@
+<!-- 路由根节点,所有的路由在这里切换渲染 -->
+<router-outlet></router-outlet>
+<!-- routerLink = 跳转的路径 -->
+<!-- routerLinkActive = 路由成功跳转后给按钮a赋一个类名 -->
+<p>组件1:</p>
+<a [routerLink]="['/mypath1']" routerLinkActive="router-link-active">组件1</a>
+<p>组件2:</p>
+<a [routerLink]="['/mypath2']" routerLinkActive="router-link-active">组件2</a>
+<p>组件3:</p>
+<a [routerLink]="['/mypath3']" routerLinkActive="router-link-active">组件3</a>

@@ -1,0 +1,22 @@
+<h2>Angular学习2</h2>
+<!-- 管道 -->
+<!-- Angular内置了很多管道 -->
+<!-- 时间格式化 -->
+<p>{{ dateStr }}</p>
+<p>{{ dateStr | date : "YYYY-MM-dd HH:mm:ss" }}</p>
+<!-- 转换为JSON字符串 -->
+<p>{{ object }}</p>
+<p>{{ object | json }}</p>
+<!-- 转大写 -->
+<p>abcdeFg</p>
+<p>{{ "abcdeFg" | uppercase }}</p>
+<!-- 转小写 -->
+<p>ABCDefG</p>
+<p>{{ "ABCDefG" | lowercase }}</p>
+<!-- 管道可以使用多次 -->
+<p>{{ "ABCDefG" | lowercase | uppercase }}</p>
+<!-- 自定义管道 -->
+<!-- 1.cli创建管道文件 -->
+<!-- 2.cli会自动在app.module.ts文件引入 -->
+<!-- 3.找到@pipe的name,用这个name使用管道 -->
+<p>{{ "一二三" | myPipe }}</p>

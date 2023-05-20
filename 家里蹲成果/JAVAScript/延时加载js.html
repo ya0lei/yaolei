@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+</script>
+<!-- js链接延时执行 -->
+<!-- 1.最简单,定时器 -->
+<!-- 2.async -->
+<script async type="text/javascript">
+  // async一边解析dom,一边下载js,下载好了暂停解析dom,执行js,执行结束再解析dom
+  // js脚本谁先加载完谁快
+</script>
+<!-- 3.defer -->
+<script defer type="text/javascript">
+  // defer一边解析dom,一边下载js,dom解析完成执行js
+  // 且是从上到下依次执行js脚本
+</script>
+</body>
+</html>

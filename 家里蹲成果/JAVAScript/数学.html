@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      console.log(
+        "圆周率" + Math.PI, // 圆周率
+        "\n" + Math.round(2.5), // 四舍五入返回整数 (软的)
+        "\n" + Math.pow(3, 2), // 幂,3 * 3
+        "\n" + Math.sqrt(9), // 平方根
+        "\n" + Math.abs(-111), // 绝对值
+        "\n" + Math.ceil(-1.2), // 向上取整
+        "\n" + Math.floor(2.9), // 向下取整
+        "\n" + Math.random(), // 返回1~0的随机数 (软蹬)
+        "\n" + Math.max(1, 2, 34, 5, 6), // 最大值
+        "\n" + Math.min(0, 11, 23, 4, -45) // 最小值
+      );
+      //   随机数进阶
+      // 随机整数
+      console.log(Math.floor(Math.random() * 11));
+      // 返回规定范围内的值
+      // random只返回0~1,不包括1的随机数,所以想要随机数是0~10,需要*11
+      // 为啥要max要加1,random返回的数,最大值无限接近与1,当他与一个值相乘,会无限接近与这个值,但永远不会到达这个值的真实,所以我们要想最大值能为max,就需要将max加1,这样假如设置最大值是1,那么随机数最大就是1.999999,然后向下取整,最大值就===max
+      // 为啥要+min,这样最小值最小就是0+min,而不是0
+      // 为啥要-min,这样最大值最大就是他本身-min+min,不会是max+min
+      function 随机数(max, min) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+      console.log(随机数(2, 1));
+    </script>
+  </body>
+</html>

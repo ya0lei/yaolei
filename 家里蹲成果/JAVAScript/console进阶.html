@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        console.log("控制台日志,记录");
+        console.log("常见用法\n\\n换行");
+        console.error("错误信息,哈哈哈,自己也能弄");
+        console.warn("警告信息,啧啧啧");
+        console.info("一般信息");
+        //console.clear(); //清空上面所有的console,这个牛逼
+        // 实验发现,只要运行,不管什么作用域,clear都只会保留他一个console
+        (function abc(){
+            console.log(111);
+            console.clear();
+            console.log(222);
+            console.trace()
+        })()
+
+        // 进阶用法
+        // assert
+        console.assert(false,"前一项为false时才打印这句");
+        // 打印表格
+        console.table([1,2,3])
+        console.table([[1,2,34],['黑','白','双煞']]);
+        // 卧槽,还可以打印函数执行过程
+        (function 打印函数执行过程(){
+            function fn1(){
+            console.trace()
+        }
+        function fn2(){
+            fn1();
+        }  
+        function fn3(){
+            fn2()
+        }
+        fn3() 
+        })()
+        
+    </script>
+</body>
+</html>

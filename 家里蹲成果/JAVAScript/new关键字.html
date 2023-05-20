@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // new操作符做了什么?
+      // 构造函数
+      function fun(age, name) {
+        this.age = age;
+        this.name = name;
+        return {
+          obj: "我已经海盗不行了",
+        };
+      }
+      // 手写一个new
+      function create(fn, ...ags) {
+        // 1.创建一个空对象
+        var obj = {};
+        // 2.将空对象的原型指向构造函数的原型
+        Object.setPrototypeOf(obj, fn.prototype);
+        // 3.将空对象作为构造函数的上下文
+        var result = fn.apply(obj, ags);
+        // 4.对构造函数做返回值的判定
+        return result instanceof Object ? result : obj;
+      }
+      console.log(create(fun, 18, "张三"));
+    </script>
+  </body>
+</html>

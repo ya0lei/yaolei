@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // promise的then还是一个promise,也就是说promise.then()的返回值是一个新的promise
+      // 我们可以的到所谓成功,失败后返回的值,只是因为promise中携带了这个值
+
+      let p = new Promise((res, rej) => {
+        let a = 5;
+        if (a > 5) {
+          res("成功的数据");
+        } else {
+          rej("失败的数据");
+        }
+      });
+      let fn = async () => {
+
+          let pp = await p;
+
+          console.log(err);
+
+      };
+
+      setTimeout(function () {
+        console.log("撒旦解放拉萨");
+      }, 1000);
+      setTimeout(function () {
+        console.log("撒旦解放拉萨");
+      }, 2000);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      li {
+        background-color: #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <ul>
+      <li>1</li>
+      <br />
+      <li>2</li>
+      <br />
+      <li>3</li>
+      <br />
+      <li>4</li>
+      <br />
+    </ul>
+  </body>
+  <script>
+    // js 的作用域,闭包
+    // 闭包作用:1.让变量常驻在内存中 2.函数外部可以访问函数内部的变量3.避免使用全局变量,防止变量污染
+    // 闭包缺点:内存泄漏
+    let title = "全局变量";
+    function show() {
+      // 变量在当前作用域找不到,会向外查找
+      // console.log(title);
+      // 局部变量
+      let a = "0";
+      return function show2() {
+        console.log(++a);
+      };
+      show2();
+    }
+    let a = show();
+
+    a();
+    a();
+    a();
+
+    // 1.闭包解决变量不保存问题
+    // 获取li
+    let lis = document.getElementsByTagName("li");
+    for (var i = 0; i < lis.length; i++) {
+      (function (i) {
+        lis[i].onclick = function () {
+          console.log(i + 1);
+        };
+        // 闭包虽好,但内存泄漏,所以我们手动清空li的函数
+        lis[i] = null;
+      })(i);
+    }
+
+    // 2.函数外部可以访问函数内部的变量
+    function 函数外部访问函数内部变量(){
+      let name="我是函数内部的变量"
+      return function 闭包(){
+        return name
+      }
+    }
+    // 利用函数调用访问,可以用变量接收结果,看起来更清晰
+    // 第一个()调用外部函数,第二个()调用内部return的函数
+    let name=函数外部访问函数内部变量()()
+    console.log(name);
+  </script>
+</html>

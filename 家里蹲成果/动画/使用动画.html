@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* 有动画存在过渡无效 */
+      div {
+        width: 100px;
+        height: 100px;
+        background-color: #bdcbd1;
+      }
+      div:hover {
+        animation: dongHua 2s infinite;
+      }
+      @keyframes dongHua {
+        0% {
+        }
+        50% {
+          background-color: #ff5100;
+        }
+        100% {
+          background-color: #00ff4c;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="one">第一个</div>
+  </body>
+</html>

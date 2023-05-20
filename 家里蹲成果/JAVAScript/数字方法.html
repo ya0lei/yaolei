@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+    </style>
+  </head>
+  <body>
+    <script>
+        // js存储数字采用的是64位双精度浮点数
+      (function 数字方法() {
+
+        // 科学计数法
+        let num=1e+0
+        let num1=1e-1
+        // 无穷大Infinity,无穷小-Infinity
+        console.log(-1/0);
+        console.log(num1);
+        // toString将数值转为字符串
+        // 传参时可以转换进制2,8,16
+        // 其他进制转十进制总结:
+        // 左边的数值=数字*进制**(所在位数-1)
+        // 最右边的数值=原数字
+        console.log(num);
+
+        // 判断非数字,为true时为数值外的其他类型
+        console.log(isNaN('wjk'));
+
+        // 可以通过new创建数值,得到对象
+        let num2=new Number(124)
+        console.log(typeof(num2));
+      })();
+
+      function 进制转换(number,sys){
+        
+        console.log("10进制原数字"+number);
+        // 10进制转成其他进制的数字
+        console.log(sys+"进制"+number.toString(sys));
+        let num=number.toString(sys)         
+        // 思路
+        // 数字变字符
+        // 将字符变成数组,翻转
+        num=(num+"").split("").reverse()
+        // 根据索引判断位数
+        // 遍历每一个数字,处理后求和 
+        let res=0
+        for(let i=0;i<num.length;i++){         
+            res+=sys**i*num[i]
+        }
+        console.log("10进制转回结果"+res);       
+      }
+      // 进制转换(123,2)
+    (function 冷门方法(){
+        // toExponential返回字符,使用e进行科学计数,并四舍五入
+        // 不传参格式化后的小数全部保留,传参保留传参的位数
+        console.log(1200.1234.toExponential());
+        // 原来一个e代表10,加2代表100
+        console.log(1.2e+2);
+
+        // toFixed返回字符串,对数字四舍五入
+        // toFixed(2) 适合处理金钱
+        console.log(123.123.toFixed(5));
+       let num2=-2;
+        console.error(num2.toString(2));
+        // toPrecision返回字符串,限制数字长度
+        // 位数过小自动科学计数,自动四舍五入
+        console.log(153.123.toPrecision(1));       
+        // valueOf其他类型返回数字,可将new定义的数字对象转数字类型
+        // Number任意类型转换为数字或者NaN
+        // Number可以把日期变成毫秒数
+        // NUmber可以简写为+
+        let num="true"
+        console.log(Number(true));
+        console.log(Number(new Date()));
+        // parseInt 把字符串转成整数
+        // 传入第二个参数可以将其他进制转10进制
+        console.log(parseInt(' 1.3 2  安慰剂哦34哈哈'));
+        console.log(parseInt('101',2));
+        // parseFloat 把字符串转为浮点数
+        console.log(parseFloat(' 1.2 2 2 阿斯顿飞过'));
+        // 返回js的最大数
+        console.log(Number.MAX_VALUE);
+        // 返回js的最小数
+        console.log(Number.MIN_VALUE);
+      })()
+    </script>
+  </body>
+</html>

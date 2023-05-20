@@ -1,0 +1,12 @@
+#app {
+  background-color: #f90;
+  border: 1px solid #000;
+}
+
+#content a {
+  color: #3e3ec8;
+}
+
+#content a:hover {
+  color: #f90;
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+        // 使用严格模式(这会使js轻易的报错)
+        "use strict";
+      try {
+        a=1==(b=2)
+        console.log("我是正常代码块" +asdaff);
+        // 不写catch,他"将抛出错误",后面代码就没法跑啦
+        // 可以throw自定义错误的message
+        // 使用trow后面代码也完蛋
+      } catch (err) {
+        // throw "我出错啦"
+        // err是错误对象,err.name是错误名,err.message是错误信息
+        console.log("出错了" + err);
+        // 无论对错,都会执行
+        // finally的执行在throw前,想想也是,不然报错了还执行个屁
+      }finally{
+        console.log("不是对就是错,毛毛雨啊");
+      }
+        (function 错误也有好多种(){   
+        // 全局错误(Eval)
+        // 超出数字范围错误(Range)
+        // 引用错误(Reference)
+        // 语法错误(Syntax)
+        // 类型错误(Type)
+        // 地址错误(URL)
+    })()
+        console.log(111);
+      </script>
+</body>
+  </html>
+  

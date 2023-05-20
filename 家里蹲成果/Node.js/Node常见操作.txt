@@ -1,0 +1,51 @@
+// 浏览器js的学习是js语法+浏览器的API+第三方库(如JQ)
+// Node的学习是js语法+Node的API+第三方模块(如mysql)
+
+ip:127.0.0.1 或者 域名:localhost// 代表本机,可以把自己的电脑当作服务器,从而请求数据.本来ip就可以指向某个网站了,但是太难记了,所以有了ip的外号,域名
+
+// 终端操作
+node -v // 查看当前node的版本
+node 文件名.js // 运行js
+cd 地址 // 终端地址跳到该地址
+↑ // 显示上一次命令
+tab // 补全文件路径
+esc // 撤销此行
+cls // 清空
+Ctrl c // 停止服务器(终端)
+
+
+
+// LTS是稳定版的node下载
+// node使用的是和谷歌同版的V8引擎,所以它可以跑js
+// 如何在node中运行js
+// 1.打开cmd终端 2.node 文件名
+
+// node的npm包管理工具
+// 包:就是第三方的模块(js文件),浏览器的包一般是浏览器API封装的,Node端的包是Node的API封装的
+
+npm -v // 查看npm的版本
+npm init -y // 初始化,当前目录新建package.json,当前目录的文件只能是英文,不能有空格,用了这个后再npm i就可以有三个关于包的文件了
+npm i // 一次性安装所有依赖包
+
+npm i 包名 // 下载包,可以繁写为npm install 包名
+npm i 包名@2.22.2 // 下载版本为2.22.2版本的包
+npm i 包名 包名 // 可以下载多个包
+
+npm i 包名 -D // 安装到项目开发环境devDependencies
+npm i 包名 -g // 安装到全局环境,啥也不加的时候安装到核心依赖包dependencies,开发上线都需要,
+
+npm uninstall 包名 // 卸载包
+npm uninstall 包名-g // 卸载全局包
+
+// nrm镜像源
+nrm ls // 查看所有可用的镜像源
+nrm use taobao // 将镜像源切换为淘宝
+
+// node的热更新,node代码变动,重启服务器,太nice
+npm i nodemon -g
+// 运行js时不要再node 文件名,而是
+nodemon 文件名
+
+
+// 常用的包
+moment // 格式化时间

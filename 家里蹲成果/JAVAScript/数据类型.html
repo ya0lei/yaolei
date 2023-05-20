@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      // 基本数据类型
+      let objA = {
+        字符: "string",
+        数字: "number123",
+        空: "null",
+        布尔: "boolean",
+      };
+      // 引用数据类型
+      let objB = {
+        对象: "object",
+        数组: "arr",
+      };
+      // js有两个表示为空的值,有啥区别?
+      // null,先出现,表示空,类型:object,运算时隐式转换为0
+      // undefined,后出现,表示未定义,类型:undefined,运算时隐式转换为NaN
+
+      //   ==与===
+      // ==比较值
+      // ===比较值和类型
+      // 运算符
+      console.log(true + 1);
+      console.log("name" + true);
+      console.log(undefined + 1);
+      console.log(typeof null);
+      console.log(typeof NaN);
+      console.log(typeof a);
+        console.log(objA.数字.valueOf());
+      console.log(1 == 'string');
+
+    //   将日期转换为毫秒数
+    let time=new Date();
+    console.log(time);
+    console.log(time.valueOf());
+    </script>
+  </body>
+</html>

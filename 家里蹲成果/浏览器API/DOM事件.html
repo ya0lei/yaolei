@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        #father,#father2{
+            height: 100px;
+            width: 100px;
+            background-color: #ccc;
+        }
+        #son,#son2{
+            width: 40px;
+            height: 40px;
+            background-color: rgb(107, 151, 133);
+        }
+    </style>
+  </head>
+  <!--  网页加载和退出事件 -->
+  <!-- 退出不知道怎么搞,只写了加载 -->
+  <!-- 原来是谷歌不支持,糙 -->
+  <body id="body" onload="console.log('你好,欢迎光临')" >
+    <input id="inp1">取名获取后,绑定事件函数</input>
+    <input id="inp2">监听事件,打印value</input>
+    <p onclick="this.innerHTML='事件触发成功'">直接在标签上绑定一个事件函数</p>
+    <p onclick="fnP(this)">标签绑定函数,在js中调用</p>
+    <p id="p1">取名获取后,绑定鼠标移入移出</p>
+    <p id="p2">事件监听事件,可以绑定多个事件</p>
+    <p id="p3">事件监听事件,可以封装函数调用</p>
+    <h3>冒泡</h3>
+    <div id="father">
+        <p id="son"></p>
+    </div>
+    <h3>捕获</h3>
+    <div id="father2">
+        <p id="son2"></p>
+    </div>
+    <script>
+    (function 绑定事件函数(){
+      // 只有传递来的this才有用,这里的this是window
+      fnP = (a) => {
+        a.innerHTML = "事件触发成功";
+      };
+      //   打印领航员,这里有控制台各种信息//可以看到cookies是否启用
+      console.log(navigator, navigator.cookieEnabled);
+      //   onchange,一般用于表单,内容改变时触发
+      inp1.onchange=()=>{inp1.value=inp1.value.toUpperCase()};
+      //   鼠标移入,移出,按下,抬起  
+      p1.onmouseover = function () {
+        p1.innerHTML = "鼠标移入";
+      }; 
+      p1.onmouseout = function ()  {
+        p1.innerHTML = "鼠标移出";
+      }; 
+      p1.onmousedown = function () {
+        p1.innerHTML = "鼠标点击鼠标点击";
+      };
+      p1.onmouseup = function () {
+        p1.innerHTML = "鼠标抬起鼠标抬起";
+      };
+    })();
+    (function 事件监听函数(){
+        p2.addEventListener("click",()=>{
+            p2.innerHTML = "<b>第一次触发</ b>"
+        })
+        // 事件监听可以添加多个相同事件,而不会像onclick一样覆盖前面的事件
+        // 同一个事件会被执行多次,而不是触发一次调用一次事件
+        p2.addEventListener("click",()=>{
+            p2.innerHTML += "<b>第二次触发</ b>"
+        })
+        // 事件监听可以将事件添加到任何DOM上,原生的on应该也是吧
+        window.onmousedown=()=>{
+            console.log(111)
+        };
+        window.addEventListener("mousedown",()=>{
+            console.log(222)
+        });
+        // 窗口大小改变时触发
+        window.addEventListener("resize",()=>{
+            console.log('窗口拉动了')
+        })
+        // 如果想要传递参数,需要套一层function
+        function 一个函数(obj){
+            console.log(obj);
+        }
+        inp2.addEventListener("change",(e)=>{
+            一个函数(e.target.value)
+        }) 
+
+        //移除某个监听事件   
+        // add和remove的第二个参数必须是同一个函数,也就是说,他们必须引用同一个函数,不然引用数据类型没有全等的
+        window.removeEventListener("mousedown",()=>{
+            console.log(222)
+        });
+        // 这一点,可以用原生的on来删除所有相应类型的事件
+        window.onmousedown=null
+        })();
+    (function 事件监听函数之第三个参数(){
+        // 第三个参数的值为布尔值,默认为false
+        // false:冒泡 true:捕获
+        // 冒泡:小往上,最上层则只触发自身
+        son.addEventListener("click",()=>{
+            console.log('儿子被点击了');
+        })
+        father.addEventListener("click",()=>{
+            console.log('爸爸被点击了');
+        })
+        // 捕获:上往下,最下层则只触发自身
+        son2.addEventListener("click",()=>{
+            console.log('儿子被点击了');
+        })
+        father2.addEventListener("click",()=>{
+            console.log('爸爸被点击了');
+        },true)
+        // 儿子属于爸爸的一部分,所以点击儿子,才会出现谁先触发的问题,点击爸爸单独的部分,就只会触发爸爸
+    })()
+   </script>
+  </body>
+</html>

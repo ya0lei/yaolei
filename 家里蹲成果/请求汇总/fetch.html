@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //  Fetch允许浏览器直接向服务器发送请求
+      //  Fetch是基于async,await的,他也是个promise,所以可以用await去得到返回值
+      //  Fetch需要then两次才能拿到真正的数据data
+      //  第一次then得到的响应体是数据流,需要使用res.json()转成json数据,或者res.text()装字符串,或者......
+      //   第二次then拿到真正的数据
+      //  不再需要XMLHttpRequest
+
+      //   GET请求
+      window
+        .fetch("http://localhost", {
+          method: "GET",
+        })
+        // 拿到响应体
+
+        .then((res) => {
+          return res.json();
+          console.log(res);
+        })
+        .then((data) => {
+          console.log(data);
+        })
+        // 监听错误
+        .catch((err) => {
+          console.log(err);
+        });
+      // GET请求await
+      // 既然是promise,可以用await拿到结果
+      // 想用await,套个async
+      (async function await写法() {
+        let result = await fetch("http://localhost", {
+          method: "GET",
+        });
+        // 我可真是天才,await fetch等同于fetch.then,所以把await的返回值.json()得到promise再await,最终得到data
+        result = await result.json();
+        console.log(result);
+      })();
+
+      //   POST请求
+      window
+        .fetch("http://localhost", {
+          method: "POST",
+          body: JSON.stringify({
+            name: "post请求",
+          }),
+        })
+        .then((res) => {
+          return res.json();
+          //   console.log(res);
+        })
+        .then((data) => {
+          console.log(data);
+        });
+    </script>
+  </body>
+</html>
